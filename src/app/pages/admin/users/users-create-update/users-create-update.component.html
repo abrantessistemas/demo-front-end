@@ -1,0 +1,71 @@
+<form (ngSubmit)="save()" [formGroup]="userForm">
+  <div mat-dialog-title class="dialog-title">
+    <div class="avatar-container">
+      <img (click)="updateImage()" src="../../../../assets/avatar.png" class="avatar" mat-mini-fab
+        matTooltip="Change photo">
+    </div>
+
+    <div class="text-container">
+      <h2 *ngIf="userForm.get('login')?.value">
+        {{ userForm.get('login')?.value }}
+      </h2>
+      <h2 *ngIf="!userForm.get('login')?.value">Novo Usuário</h2>
+    </div>
+
+    <div class="button-container">
+      <button mat-dialog-close mat-mini-fab color="primary" type="button">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <mat-tab-group [disableRipple]="false">
+    <mat-tab label="Description">
+      <mat-dialog-content class="dialog-container">
+        <div class="container-fields">
+          <mat-form-field>
+            <mat-label>Usuário</mat-label>
+            <input cdkFocusInitial formControlName="username" matInput minlength="2" maxlength="50" required>
+            <mat-error *ngIf="!userForm.get('username')?.valid">
+              * Preenchimento obrigatório.
+            </mat-error>
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field style="margin-left: 5px;">
+            <mat-label>Password</mat-label>
+            <input formControlName="password" matInput minlength="2" maxlength="50" required>
+            <mat-error *ngIf="!userForm.get('password')?.valid">
+              * Preenchimento obrigatório.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field>
+          <mat-label>Profile</mat-label>
+          <mat-select formControlName="role">
+            <mat-option *ngFor="let Profile of listProfile" [value]="Profile">{{Profile}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-dialog-content>
+    </mat-tab>
+  </mat-tab-group>
+
+  <mat-dialog-actions align="end">
+    <button *ngIf="isCreateMode()" [disabled]="!userForm.valid" color="primary" mat-raised-button type="submit"
+      matTooltip="Create new User">
+      <mat-icon>add</mat-icon>
+      Criar
+    </button>
+    <button *ngIf="isUpdateMode()" color="primary" mat-raised-button type="submit" matTooltip="Update">
+      <mat-icon>edit</mat-icon>
+      Atualizar
+    </button>
+    <button type="button" *ngIf="isUpdateMode()" (click)="deleteUser()" color="primary" mat-raised-button
+      matTooltip="Delete">
+      <mat-icon>delete</mat-icon>
+      Deletar
+    </button>
+
+  </mat-dialog-actions>
+</form>

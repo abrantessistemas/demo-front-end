@@ -1,0 +1,25 @@
+<div class="login-container">
+    <div class="background"></div>
+    <div class="form-container">
+        <img src="../../../../assets/logo.png" alt="Logo" class="logo">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+            <h2 style="color: white;">Cadastre-se</h2>
+            <mat-form-field appearance="fill">
+                <mat-label>Nome de usuário</mat-label>
+                <input matInput formControlName="username" placeholder="Digite seu nome de usuário">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Senha</mat-label>
+                <input matInput formControlName="password" type="password" placeholder="Digite sua senha">
+            </mat-form-field>
+
+            <button mat-raised-button type="submit" color="accent">Create user</button>
+        </form>
+        <br />
+        <a href="login" class="forgot-password">Login</a>
+    </div>
+    <footer class="footer">
+        <p>&copy; 2023 Abrantes. Todos os direitos reservados.</p>
+    </footer>
+</div>

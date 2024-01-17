@@ -1,0 +1,60 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Cadastro de Usúarios</mat-card-title>
+    <mat-card-subtitle>CRUD de usuários do sistema</mat-card-subtitle>
+  </mat-card-header>
+  <div class="button-container">
+    <button mat-fab color="primary" (click)="createUser()" matTooltip="Criar novo Usuário">
+      <mat-icon>criar</mat-icon>
+    </button>
+  </div>
+  <mat-card-content>
+    <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+      <!-- id Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>id</th>
+        <td mat-cell *matCellDef="let element">{{element.id}}</td>
+      </ng-container>
+      <!-- username Column -->
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef>Usuário</th>
+        <td mat-cell *matCellDef="let element">{{element.username}}</td>
+      </ng-container>
+
+      <!-- role Column -->
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef>Profile</th>
+        <td mat-cell *matCellDef="let element">{{element.role}}</td>
+      </ng-container>
+
+      <!-- Action Column -->
+      <ng-container matColumnDef="actions">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Ações</th>
+        <td *matCellDef="let row" mat-cell>
+          <button mat-icon-button color="accent" (click)="$event.stopPropagation()" [matMenuTriggerData]="{ user: row }"
+            [matMenuTriggerFor]="actionsMenu" mat-icon-button style="background: transparent; border:none">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+      <tr (click)="updateUser(row)" *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="limit" [length]="totalItems" (page)="onPage($event)"
+      showFirstLastButtons></mat-paginator>
+  </mat-card-content>
+</mat-card>
+
+<mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+  <ng-template let-user="user" matMenuContent>
+    <button (click)="updateUser(user)" mat-menu-item>
+      <mat-icon>edit</mat-icon>
+      <span>Atualizar</span>
+    </button>
+    <button (click)="deleteUser(user)" mat-menu-item>
+      <mat-icon>delete</mat-icon>
+      <span>Deletar</span>
+    </button>
+  </ng-template>
+</mat-menu>

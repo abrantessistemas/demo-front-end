@@ -1,0 +1,27 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="side" [opened]="isExpanded">
+    <!-- Sidenav header with logo -->
+    <div class="sidenav-header">
+      <img src="../../../../assets/logo.png" alt="Logo" class="logo">
+      <button mat-icon-button (click)="toggleSidenav()">
+        <mat-icon>{{ isExpanded ? 'chevron_left' : 'chevron_right' }}</mat-icon>
+      </button>
+    </div>
+
+    <!-- Links dinâmicos -->
+    <mat-nav-list>
+      <a class="sidenav-nav-item" mat-list-item *ngFor="let item of navItens">
+        <a class="sidenav-nav-link" [routerLink]="item.routerLink">
+          <i class="sidenav-nav-link-icon" [class]="item.icon"></i>
+          <span class="sidenav-link-text">{{ item.label }}</span>
+        </a>
+      </a>
+
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <abs-header (sidenavToggle)="toggleSidenav()" [isExpanded]="isExpanded"></abs-header>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<abs-footer></abs-footer>
