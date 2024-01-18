@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
@@ -16,6 +16,7 @@ import { UserService } from './../model/user.service';
 export class UsersCreateUpdateComponent {
   userForm!: FormGroup;
   formatPhone!: string;
+  confirm!: FormControl;
 
   mode: 'delete' | 'create' | 'update' = 'create';
   listTitle = ['mr', 'ms', 'mrs', 'miss', 'dr'];

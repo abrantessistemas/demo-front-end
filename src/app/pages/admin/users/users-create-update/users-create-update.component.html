@@ -34,8 +34,16 @@
 
           <mat-form-field style="margin-left: 5px;">
             <mat-label>Password</mat-label>
-            <input formControlName="password" matInput minlength="2" maxlength="50" required>
+            <input formControlName="password" matInput minlength="2" type="password" maxlength="50" required>
             <mat-error *ngIf="!userForm.get('password')?.valid">
+              * Preenchimento obrigatório.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field style="margin-left: 5px;">
+            <mat-label> Confirm Password</mat-label>
+            <input [formControl]="confirm" matInput minlength="2" type="password" maxlength="50" required>
+            <mat-error *ngIf="userForm.get('password')?.value !== confirm">
               * Preenchimento obrigatório.
             </mat-error>
           </mat-form-field>

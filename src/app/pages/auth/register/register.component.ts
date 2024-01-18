@@ -36,21 +36,22 @@ export class RegisterComponent implements OnInit {
     this.authService.registerUser(
       this.user
     ).pipe(first()).subscribe((data) => {
-      const perfil = data.authorities[0];
 
-      if (perfil === 'ADMIN') {
-        this.router.navigate(['admin/dashboard']);
-      } else if (perfil === 'MASTER') {
-        this.router.navigate(['master/dashboard']);
-
-      } else {
-        this.router.navigate(['user']);
-
-      }
       this.snackbar.open('Cadastro realizado com sucesso.', 'fechar', {
         duration: 5000,
         panelClass: 'app-notification-success'
       });
+
+      this.authService.login(this.user.login, this.user.password).subscribe(result => {
+        const perfil = this.authService.getUserRoles();
+
+        if (perfil.includes('ADMIN')) {
+          this.router.navigate(['admin/dashboard']);
+        } else {
+          this.router.navigate(['user']);
+        }
+      });
+
     },
       (exception: BadRequestContract) => {
         this.snackbar.open(exception.message, exception.status.toString(), {

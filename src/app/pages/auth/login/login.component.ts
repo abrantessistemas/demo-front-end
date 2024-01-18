@@ -36,8 +36,6 @@ export class LoginComponent implements OnInit {
 
         if (perfil.includes('ADMIN')) {
           this.router.navigate(['admin/dashboard']);
-        } else if (perfil.includes('MASTER')) {
-          this.router.navigate(['master/dashboard']);
         } else {
           this.router.navigate(['user']);
         }
