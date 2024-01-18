@@ -15,24 +15,24 @@
   </div>
 
   <mat-tab-group [disableRipple]="false">
-    <mat-tab label="Description">
+    <mat-tab label="Descrição">
       <mat-dialog-content class="dialog-container">
+        <mat-form-field>
+          <mat-label>Nome</mat-label>
+          <input cdkFocusInitial formControlName="nome" matInput minlength="2" maxlength="50" required>
+          <mat-error *ngIf="!beneficiarioForm.get('nome')?.valid"></mat-error>
+        </mat-form-field>
+
         <div class="container-fields">
           <mat-form-field>
-            <mat-label>Nome</mat-label>
-            <input cdkFocusInitial formControlName="nome" matInput minlength="2" maxlength="50" required>
-            <mat-error *ngIf="!beneficiarioForm.get('nome')?.valid"></mat-error>
+            <mat-label>Data Nascimento</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dataNascimento">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field style="margin-left: 5px;">
-            <mat-label>Data Nascimento</mat-label>
-            <input formControlName="dataNascimento" matInput required>
-            <mat-error *ngIf="!beneficiarioForm.get('dataNascimento')?.valid"></mat-error>
-          </mat-form-field>
-        </div>
-
-        <div class="container-fields">
-          <mat-form-field>
             <mat-label>Telefone</mat-label>
             <input formControlName="telefone" matInput minlength="2" maxlength="50" required>
             <mat-error *ngIf="!beneficiarioForm.get('telefone')?.valid"></mat-error>
@@ -40,7 +40,7 @@
         </div>
       </mat-dialog-content>
       <mat-tab label="Documentos">
-
+        <abs-documentos [exibirTitulo]="true" [beneficiarioId]="defaults.id"></abs-documentos>
       </mat-tab>
     </mat-tab>
   </mat-tab-group>

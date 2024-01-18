@@ -5,5 +5,4 @@ export class BeneficiarioModel {
   dataNascimento!: Date;
   dataInclusao!: Date;
   dataAtualizacao!: Date;
-  documentos!: string;
 }

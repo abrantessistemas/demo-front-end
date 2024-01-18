@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { DocumentosModule } from '../../documentos/documentos.module';
 import { BeneficiariosCreateUpdateComponent } from './beneficiarios-create-update.component';
 
 
@@ -30,7 +31,9 @@ import { BeneficiariosCreateUpdateComponent } from './beneficiarios-create-updat
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatTabsModule
+    MatTabsModule,
+    DocumentosModule,
+    MatDatepickerModule
   ]
 })
 export class BeneficiariosCreateUpdateModule { }

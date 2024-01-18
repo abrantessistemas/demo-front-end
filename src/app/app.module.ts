@@ -27,6 +27,7 @@ import { DashboardComponent } from './pages/admin/dashboard/dashboard.component'
 import { UsersModule } from './pages/admin/users/users.module';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
+import { DocumentosModule } from './pages/admin/documentos/documentos.module';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { RegisterComponent } from './pages/auth/register/register.component';
     //API
     ConfirmationDialogModule,
     UsersModule,
-    BeneficiariosModule
+    BeneficiariosModule,
+    DocumentosModule
   ],
   bootstrap: [AppComponent]
 })

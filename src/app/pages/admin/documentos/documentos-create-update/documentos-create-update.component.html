@@ -1,1 +1,56 @@
-<p>documentos-create-update works!</p>
+<form (ngSubmit)="save()" [formGroup]="documentoForm">
+  <div mat-dialog-title class="dialog-title">
+    <div class="text-container">
+      <h2 *ngIf="documentoForm.get('descricao')?.value">
+        {{ documentoForm.get('descricao')?.value }}
+      </h2>
+      <h2 *ngIf="!documentoForm.get('descricao')?.value">New Documento</h2>
+    </div>
+
+    <div class="button-container">
+      <button mat-dialog-close mat-mini-fab color="primary" type="button">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <mat-tab-group [disableRipple]="false">
+    <mat-tab label="Descrição">
+      <mat-dialog-content class="dialog-container">
+        <div class="container-fields">
+          <mat-form-field>
+            <mat-label>Descrição</mat-label>
+            <input cdkFocusInitial formControlName="descricao" matInput minlength="2" maxlength="50" required>
+            <mat-error *ngIf="!documentoForm.get('descricao')?.valid"></mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="container-fields">
+          <mat-form-field>
+            <mat-label>Tipo Documento</mat-label>
+            <input formControlName="tipoDocumento" matInput minlength="2" maxlength="50" required>
+            <mat-error *ngIf="!documentoForm.get('tipoDocumento')?.valid"></mat-error>
+          </mat-form-field>
+        </div>
+      </mat-dialog-content>
+    </mat-tab>
+  </mat-tab-group>
+
+  <mat-dialog-actions align="end">
+    <button *ngIf="isCreateMode()" [disabled]="!documentoForm.valid" color="primary" mat-raised-button type="submit"
+      matTooltip="Create new Documento">
+      <mat-icon>add</mat-icon>
+      Criar
+    </button>
+    <button *ngIf="isUpdateMode()" color="primary" mat-raised-button type="submit" matTooltip="Update">
+      <mat-icon>edit</mat-icon>
+      Atualizar
+    </button>
+    <button type="button" *ngIf="isUpdateMode()" (click)="deleteDocumento()" color="primary" mat-raised-button
+      matTooltip="Delete">
+      <mat-icon>delete</mat-icon>
+      Deletar
+    </button>
+
+  </mat-dialog-actions>
+</form>

@@ -39,8 +39,7 @@ export class BeneficiariosCreateUpdateComponent {
       telefone: this.defaults.telefone,
       dataNascimento: this.defaults.dataNascimento,
       dataInclusao: this.defaults.dataInclusao,
-      dataAtualizacao: this.defaults.dataAtualizacao,
-      documentos: this.defaults.documentos,
+      dataAtualizacao: this.defaults.dataAtualizacao
     });
   }
   save() {

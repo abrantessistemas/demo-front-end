@@ -21,6 +21,7 @@ export class BeneficiariosComponent {
   limit!: number;
   totalItems!: number;
   pageSizeOptions: number[] = [5, 10, 20];
+  beneficiarioId!: number;
 
   displayedColumns: string[] = [
     'id',
@@ -175,5 +176,5 @@ export class BeneficiariosComponent {
     }
     return '';
   }
-  
+
 }
