@@ -22,7 +22,7 @@
   <mat-tab-group [disableRipple]="false">
     <mat-tab label="Descrição">
       <mat-dialog-content class="dialog-container">
-        <mat-form-field>
+        <mat-form-field appearance="outline" class="block w-full">
           <mat-label>Usuário</mat-label>
           <input cdkFocusInitial formControlName="username" matInput minlength="2" maxlength="50" required>
           <mat-error *ngIf="!userForm.get('username')?.valid">
@@ -31,7 +31,7 @@
           <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
         </mat-form-field>
         <div class="container-fields">
-          <mat-form-field style="margin-left: 5px;">
+          <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
             <mat-label>Password</mat-label>
             <input formControlName="password" matInput minlength="2" type="password" maxlength="50" required>
             <mat-error *ngIf="!userForm.get('password')?.valid">
@@ -39,7 +39,7 @@
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field style="margin-left: 5px;">
+          <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
             <mat-label> Confirm Password</mat-label>
             <input [formControl]="confirm" matInput minlength="2" type="password" maxlength="50" required>
             <mat-error *ngIf="userForm.get('password')?.value !== confirm">
@@ -48,7 +48,7 @@
           </mat-form-field>
         </div>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline" class="block w-full">
           <mat-label>Profile</mat-label>
           <mat-select formControlName="role">
             <mat-option *ngFor="let Profile of listProfile" [value]="Profile">{{Profile}}</mat-option>

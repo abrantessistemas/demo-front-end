@@ -1,0 +1,89 @@
+<form (ngSubmit)="save()" [formGroup]="enderecoForm">
+  <div mat-dialog-title class="dialog-title">
+    <div class="avatar-container">
+      <img (click)="updateImage()" src="../../../../assets/avatar.png" class="avatar" mat-mini-fab
+        matTooltip="Change photo">
+    </div>
+
+    <div class="text-container">
+      <h2 *ngIf="enderecoForm.get('login')?.value">
+        {{ enderecoForm.get('login')?.value }}
+      </h2>
+      <h2 *ngIf="!enderecoForm.get('login')?.value">Novo Usuário</h2>
+    </div>
+
+    <div class="button-container">
+      <button mat-dialog-close mat-mini-fab color="primary" type="button">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <mat-tab-group [disableRipple]="false">
+    <mat-tab label="Descrição">
+      <mat-dialog-content class="dialog-container">
+        <mat-form-field>
+          <mat-label>CEP</mat-label>
+          <input cdkFocusInitial formControlName="cep" matInput required>
+          <mat-error *ngIf="!enderecoForm.get('cep')?.valid">
+            * Preenchimento obrigatório.
+          </mat-error>
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Logradouro</mat-label>
+          <input cdkFocusInitial formControlName="logradouro" matInput required>
+          <mat-error *ngIf="!enderecoForm.get('logradouro')?.valid">
+            * Preenchimento obrigatório.
+          </mat-error>
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Número</mat-label>
+          <input cdkFocusInitial formControlName="numero" matInput required>
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+
+        <div class="container-fields">
+          <mat-form-field>
+            <mat-label>Complemento</mat-label>
+            <input cdkFocusInitial formControlName="complemento" matInput>
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Município</mat-label>
+            <input cdkFocusInitial formControlName="municipio" matInput>
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Bairro</mat-label>
+            <input cdkFocusInitial formControlName="bairro" matInput>
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          </mat-form-field>
+        </div>
+      </mat-dialog-content>
+    </mat-tab>
+  </mat-tab-group>
+
+  <mat-dialog-actions align="end">
+    <button *ngIf="isCreateMode()" [disabled]="!enderecoForm.valid" color="primary" mat-raised-button type="submit"
+      matTooltip="Create new Endereco">
+      <mat-icon>add</mat-icon>
+      Criar
+    </button>
+    <button *ngIf="isUpdateMode()" color="primary" mat-raised-button type="submit" matTooltip="Update">
+      <mat-icon>edit</mat-icon>
+      Atualizar
+    </button>
+    <button type="button" *ngIf="isUpdateMode()" (click)="deleteEndereco()" color="primary" mat-raised-button
+      matTooltip="Delete">
+      <mat-icon>delete</mat-icon>
+      Deletar
+    </button>
+
+  </mat-dialog-actions>
+</form>

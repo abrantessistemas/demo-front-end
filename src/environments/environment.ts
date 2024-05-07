@@ -6,5 +6,10 @@ export const environment = {
   oAuthRegisterUrl: "http://localhost:8080/auth/register",
   usersUrl: "http://localhost:8080/usuarios",
   beneficiariosUrl: "http://localhost:8080/beneficiarios",
-  documentosUrl: "http://localhost:8080/documentos"
+  documentosUrl: "http://localhost:8080/documentos",
+  empresasUrl: "http://localhost:8080/empresas",
+  enderecosUrl: "http://localhost:8080/enderecos",
+  categoriasUrl: "http://localhost:8080/categorias",
+  produtosUrl: "http://localhost:8080/produtos",
+  estoquesUrl: "http://localhost:8080/estoques"
 };

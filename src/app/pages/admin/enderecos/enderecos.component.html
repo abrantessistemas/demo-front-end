@@ -1,0 +1,100 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Cadastro de Endereços</mat-card-title>
+  </mat-card-header>
+  <div class="button-container">
+    <button mat-fab color="primary" (click)="createEndereco()" matTooltip="Criar novo Endereço">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <mat-card-content>
+    <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+      <!-- id Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>id</th>
+        <td mat-cell *matCellDef="let element">{{element.id}}</td>
+      </ng-container>
+
+      <!-- dataCriacao -->
+      <ng-container matColumnDef="dataCriacao">
+        <th mat-header-cell *matHeaderCellDef>dataCriacao</th>
+        <td mat-cell *matCellDef="let element">{{element.dataCriacao}}</td>
+      </ng-container>
+      <!-- criadoPor -->
+      <ng-container matColumnDef="criadoPor">
+        <th mat-header-cell *matHeaderCellDef>criadoPor</th>
+        <td mat-cell *matCellDef="let element">{{element.criadoPor}}</td>
+      </ng-container>
+      <!-- ativo -->
+      <ng-container matColumnDef="ativo">
+        <th mat-header-cell *matHeaderCellDef>ativo</th>
+        <td mat-cell *matCellDef="let element">{{element.ativo}}</td>
+      </ng-container>
+      <!-- cep -->
+      <ng-container matColumnDef="cep">
+        <th mat-header-cell *matHeaderCellDef>cep</th>
+        <td mat-cell *matCellDef="let element">{{element.cep}}</td>
+      </ng-container>
+      <!-- logradouro -->
+      <ng-container matColumnDef="logradouro">
+        <th mat-header-cell *matHeaderCellDef>logradouro</th>
+        <td mat-cell *matCellDef="let element">{{element.logradouro}}</td>
+      </ng-container>
+      <!-- complemento -->
+      <ng-container matColumnDef="complemento">
+        <th mat-header-cell *matHeaderCellDef>complemento</th>
+        <td mat-cell *matCellDef="let element">{{element.complemento}}</td>
+      </ng-container>
+      <!-- numero -->
+      <ng-container matColumnDef="numero">
+        <th mat-header-cell *matHeaderCellDef>numero</th>
+        <td mat-cell *matCellDef="let element">{{element.numero}}</td>
+      </ng-container>
+      <!-- bairro -->
+      <ng-container matColumnDef="bairro">
+        <th mat-header-cell *matHeaderCellDef>bairro</th>
+        <td mat-cell *matCellDef="let element">{{element.bairro}}</td>
+      </ng-container>
+      <!-- municipio -->
+      <ng-container matColumnDef="municipio">
+        <th mat-header-cell *matHeaderCellDef>municipio</th>
+        <td mat-cell *matCellDef="let element">{{element.municipio}}</td>
+      </ng-container>
+      <!-- uf -->
+      <ng-container matColumnDef="uf">
+        <th mat-header-cell *matHeaderCellDef>uf</th>
+        <td mat-cell *matCellDef="let element">{{element.uf}}</td>
+      </ng-container>
+
+      <!-- Action Column -->
+      <ng-container matColumnDef="actions">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Ações</th>
+        <td *matCellDef="let row" mat-cell>
+          <button mat-icon-button color="accent" (click)="$event.stopPropagation()"
+            [matMenuTriggerData]="{ endereco: row }" [matMenuTriggerFor]="actionsMenu" mat-icon-button
+            style="background: transparent; border:none">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+      <tr (click)="updateEndereco(row)" *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="limit" [length]="totalItems" (page)="onPage($event)"
+      showFirstLastButtons></mat-paginator>
+  </mat-card-content>
+</mat-card>
+
+<mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+  <ng-template let-endereco="endereco" matMenuContent>
+    <button (click)="updateEndereco(endereco)" mat-menu-item>
+      <mat-icon>edit</mat-icon>
+      <span>Atualizar</span>
+    </button>
+    <button (click)="deleteEndereco(endereco)" mat-menu-item>
+      <mat-icon>delete</mat-icon>
+      <span>Deletar</span>
+    </button>
+  </ng-template>
+</mat-menu>

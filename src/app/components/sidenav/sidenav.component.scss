@@ -8,6 +8,20 @@ mat-sidenav {
   background-color: #333;
   color: white;
   padding: 4px;
+
+}
+
+.container-button-sidenav {
+  height: 100%;
+  position: fixed;
+  width: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-style: none;
+  span{
+    cursor: pointer;
+  }
 }
 
 .sidenav-header {
@@ -33,7 +47,7 @@ mat-nav-list a {
   align-items: center;
   transition: color .3s ease;
   background-color: black;
-  border-radius: 10px;
+  border-radius: 40px;
   margin-top: 3px;
 
   .sidenav-nav-link {

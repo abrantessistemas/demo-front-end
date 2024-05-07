@@ -28,6 +28,14 @@ import { UsersModule } from './pages/admin/users/users.module';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { RegisterComponent } from './pages/auth/register/register.component';
 import { DocumentosModule } from './pages/admin/documentos/documentos.module';
+import { ProdutosComponent } from './pages/admin/produtos/produtos.component';
+import { EmpresasComponent } from './pages/admin/empresas/empresas.component';
+import { CategoriasComponent } from './pages/admin/categorias/categorias.component';
+import { ProdutosModule } from './pages/admin/produtos/produtos.module';
+import { CategoriasModule } from './pages/admin/categorias/categorias.module';
+import { EmpresasModule } from './pages/admin/empresas/empresas.module';
+import { EnderecosModule } from './pages/admin/enderecos/enderecos.module';
+import { EstoquesModule } from './pages/admin/estoques/estoques.module';
 
 @NgModule({
   declarations: [
@@ -62,7 +70,12 @@ import { DocumentosModule } from './pages/admin/documentos/documentos.module';
     ConfirmationDialogModule,
     UsersModule,
     BeneficiariosModule,
-    DocumentosModule
+    DocumentosModule,
+    ProdutosModule,
+    CategoriasModule,
+    EmpresasModule,
+    EnderecosModule,
+    EstoquesModule
   ],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,110 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Cadastro de Empresas</mat-card-title>
+  </mat-card-header>
+  <div class="button-container">
+    <button mat-fab color="primary" (click)="createEmpresa()" matTooltip="Criar nova Empresa">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <mat-card-content>
+    <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+      <!-- id Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>id</th>
+        <td mat-cell *matCellDef="let empresa">{{empresa.id}}</td>
+      </ng-container>
+
+      <!-- dataCriacao Column -->
+      <ng-container matColumnDef="dataCriacao">
+        <th mat-header-cell *matHeaderCellDef>dataCriacao</th>
+        <td mat-cell *matCellDef="let empresa">{{empresa.dataCriacao}}</td>
+      </ng-container>
+      <!-- criadoPor Column -->
+      <ng-container matColumnDef="criadoPor">
+        <th mat-header-cell *matHeaderCellDef>criadoPor</th>
+        <td mat-cell *matCellDef="let empresa">{{empresa.criadoPor}}</td>
+      </ng-container>
+      <!-- ativo Column -->
+      <ng-container matColumnDef="ativo">
+        <th mat-header-cell *matHeaderCellDef>ativo</th>
+        <td mat-cell *matCellDef="let empresa">{{empresa.ativo}}</td>
+      </ng-container>
+      <!-- nomeFantasia Column -->
+      <ng-container matColumnDef="nomeFantasia">
+        <th mat-header-cell *matHeaderCellDef>nomeFantasia</th>
+        <td mat-cell *matCellDef="let empresa">{{empresa.nomeFantasia}}</td>
+      </ng-container>
+      <!-- razaoSocial Column -->
+      <ng-container matColumnDef="razaoSocial">
+        <th mat-header-cell *matHeaderCellDef>razaoSocial</th>
+        <td mat-cell *matCellDef="let empresa">{{empresa.razaoSocial}}</td>
+      </ng-container>
+      <!-- inscricaoEstadual Column -->
+      <ng-container matColumnDef="inscricaoEstadual">
+        <th mat-header-cell *matHeaderCellDef>inscricaoEstadual</th>
+        <td mat-cell *matCellDef="let empresa">{{empresa.inscricaoEstadual}}</td>
+      </ng-container>
+      <!-- inscricaoMunicipal Column -->
+      <ng-container matColumnDef="inscricaoMunicipal">
+        <th mat-header-cell *matHeaderCellDef>inscricaoMunicipal</th>
+        <td mat-cell *matCellDef="let empresa">{{empresa.inscricaoMunicipal}}</td>
+      </ng-container>
+      <!-- cnpj Column -->
+      <ng-container matColumnDef="cnpj">
+        <th mat-header-cell *matHeaderCellDef>cnpj</th>
+        <td mat-cell *matCellDef="let empresa">{{empresa.cnpj}}</td>
+      </ng-container>
+      <!-- cpf Column -->
+      <ng-container matColumnDef="cpf">
+        <th mat-header-cell *matHeaderCellDef>cpf</th>
+        <td mat-cell *matCellDef="let empresa">{{empresa.cpf}}</td>
+      </ng-container>
+      <!-- telefone Column -->
+      <ng-container matColumnDef="telefone">
+        <th mat-header-cell *matHeaderCellDef>telefone</th>
+        <td mat-cell *matCellDef="let empresa">{{empresa.telefone}}</td>
+      </ng-container>
+      <!-- email Column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>email</th>
+        <td mat-cell *matCellDef="let empresa">{{empresa.email}}</td>
+      </ng-container>
+      <!-- responsavel Column -->
+      <ng-container matColumnDef="responsavel">
+        <th mat-header-cell *matHeaderCellDef>responsavel</th>
+        <td mat-cell *matCellDef="let empresa">{{empresa.responsavel}}</td>
+      </ng-container>
+
+      <!-- Action Column -->
+      <ng-container matColumnDef="actions">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Ações</th>
+        <td *matCellDef="let row" mat-cell>
+          <button mat-icon-button color="accent" (click)="$event.stopPropagation()"
+            [matMenuTriggerData]="{ empresa: row }" [matMenuTriggerFor]="actionsMenu" mat-icon-button
+            style="background: transparent; border:none">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+      <tr (click)="updateEmpresa(row)" *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="limit" [length]="totalItems" (page)="onPage($event)"
+      showFirstLastButtons></mat-paginator>
+  </mat-card-content>
+</mat-card>
+
+<mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+  <ng-template let-empresa="empresa" matMenuContent>
+    <button (click)="updateEmpresa(empresa)" mat-menu-item>
+      <mat-icon>edit</mat-icon>
+      <span>Atualizar</span>
+    </button>
+    <button (click)="deleteEmpresa(empresa)" mat-menu-item>
+      <mat-icon>delete</mat-icon>
+      <span>Deletar</span>
+    </button>
+  </ng-template>
+</mat-menu>

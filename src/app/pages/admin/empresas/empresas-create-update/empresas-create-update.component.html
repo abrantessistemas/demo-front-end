@@ -1,0 +1,111 @@
+<form (ngSubmit)="save()" [formGroup]="empresaForm">
+  <div mat-dialog-title class="dialog-title">
+    <div class="avatar-container">
+      <img (click)="updateImage()" src="../../../../assets/avatar.png" class="avatar" mat-mini-fab
+        matTooltip="Change logo">
+    </div>
+
+    <div class="text-container">
+      <h2 *ngIf="empresaForm.get('nomeFantasia')?.value">
+        {{ empresaForm.get('nomeFantasia')?.value }}
+      </h2>
+      <h2 *ngIf="!empresaForm.get('nomeFantasia')?.value">Nova Empresa</h2>
+    </div>
+
+    <div class="button-container">
+      <button mat-dialog-close mat-mini-fab color="primary" type="button">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <mat-tab-group [disableRipple]="false">
+    <mat-tab label="Descrição">
+      <mat-dialog-content class="dialog-container">
+        <mat-form-field appearance="outline" class="block w-full">
+          <mat-label>Nome Fantasia</mat-label>
+          <input cdkFocusInitial formControlName="nomeFantasia" matInput required>
+          <mat-error *ngIf="!empresaForm.get('nomeFantasia')?.valid">
+            * Preenchimento obrigatório.
+          </mat-error>
+          <mat-icon matSuffix>business</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="block w-full">
+          <mat-label>Razão Social</mat-label>
+          <input cdkFocusInitial formControlName="razaoSocial" matInput required>
+          <mat-error *ngIf="!empresaForm.get('razaoSocial')?.valid">
+            * Preenchimento obrigatório.
+          </mat-error>
+          <mat-icon matSuffix>account_balance</mat-icon>
+        </mat-form-field>
+
+        <div class="container-fields">
+          <mat-form-field appearance="outline" class="block w-full">
+            <mat-label>Inscrição Estadual</mat-label>
+            <input cdkFocusInitial formControlName="inscricaoEstadual" matInput>
+            <mat-icon matSuffix>location_city</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
+            <mat-label>Inscrição Municipal</mat-label>
+            <input cdkFocusInitial formControlName="inscricaoMunicipal" matInput>
+            <mat-icon matSuffix>location_on</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="container-fields">
+          <mat-form-field appearance="outline" class="block w-full">
+            <mat-label>CNPJ</mat-label>
+            <input cdkFocusInitial formControlName="cnpj" matInput>
+            <mat-icon matSuffix>business_center</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
+            <mat-label>CPF</mat-label>
+            <input cdkFocusInitial formControlName="cpf" matInput>
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="container-fields">
+          <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
+            <mat-label>Telefone</mat-label>
+            <input cdkFocusInitial formControlName="telefone" matInput>
+            <mat-icon matSuffix>phone</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
+            <mat-label>Responsável</mat-label>
+            <input cdkFocusInitial formControlName="responsavel" matInput>
+            <mat-icon matSuffix>person_pin</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
+          <mat-label>E-mail</mat-label>
+          <input cdkFocusInitial formControlName="email" matInput>
+          <mat-icon matSuffix>email</mat-icon>
+        </mat-form-field>
+      </mat-dialog-content>
+    </mat-tab>
+  </mat-tab-group>
+
+  <mat-dialog-actions align="end">
+    <button *ngIf="isCreateMode()" [disabled]="!empresaForm.valid" color="primary" mat-raised-button type="submit"
+      matTooltip="Create new Empresa">
+      <mat-icon>add</mat-icon>
+      Criar
+    </button>
+    <button *ngIf="isUpdateMode()" color="primary" mat-raised-button type="submit" matTooltip="Update">
+      <mat-icon>edit</mat-icon>
+      Atualizar
+    </button>
+    <button type="button" *ngIf="isUpdateMode()" (click)="deleteEmpresa()" color="primary" mat-raised-button
+      matTooltip="Delete">
+      <mat-icon>delete</mat-icon>
+      Deletar
+    </button>
+
+  </mat-dialog-actions>
+</form>
