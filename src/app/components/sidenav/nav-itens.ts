@@ -47,6 +47,18 @@ export const navItens = [
     label: 'Estoques',
     sub: {}
   },
+  {
+    routerLink: 'clientes',
+    icon: 'fal fa-users',
+    label: 'Clientes',
+    sub: {}
+  },
+  {
+    routerLink: 'pedidos',
+    icon: 'fal fa-code',
+    label: 'Pedidos',
+    sub: {}
+  },
   /* {
      routerLink: 'enderecos',
      icon: 'fal fa-map-marker',

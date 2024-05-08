@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'; //39.-Importo el
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
+import { ProdutoModel } from '../pages/admin/produtos/model/produto.model';
 
 interface body {
 
@@ -10,7 +11,7 @@ interface body {
 @Injectable({
   providedIn: 'root'
 })
-export class Produtos2Service {
+export class ProdutosDataService {
 
   //39.1-Lo agrego al constructor
   constructor(private httpClient: HttpClient) { }
@@ -30,8 +31,8 @@ export class Produtos2Service {
       descricao: 'placa mae asus',
       precoCompra: 1400,
       precoRevenda: 1600,
-      precoTotalEstoque:0,
-      quatidadeEstoque:5,
+      precoTotalEstoque: 0,
+      quatidadeEstoque: 5,
       codigoBarras: '11',
       sku: '11',
       imageUrl: 'www',
@@ -40,5 +41,10 @@ export class Produtos2Service {
       ],
     }
   ]
-
+  /**
+   * addProduct
+   */
+  public addProduct(produto: ProdutoModel) {
+    this.produtos.push(produto);
+  }
 }

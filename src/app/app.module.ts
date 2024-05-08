@@ -36,6 +36,9 @@ import { CategoriasModule } from './pages/admin/categorias/categorias.module';
 import { EmpresasModule } from './pages/admin/empresas/empresas.module';
 import { EnderecosModule } from './pages/admin/enderecos/enderecos.module';
 import { EstoquesModule } from './pages/admin/estoques/estoques.module';
+import { ClientesModule } from './pages/admin/clientes/clientes.module';
+import { WidgetsModule } from './components/widgets/widgets.module';
+import { PedidosModule } from './pages/admin/pedidos/pedidos.module';
 
 @NgModule({
   declarations: [
@@ -75,7 +78,10 @@ import { EstoquesModule } from './pages/admin/estoques/estoques.module';
     CategoriasModule,
     EmpresasModule,
     EnderecosModule,
-    EstoquesModule
+    EstoquesModule,
+    ClientesModule,
+    WidgetsModule,
+    PedidosModule
   ],
   bootstrap: [AppComponent]
 })

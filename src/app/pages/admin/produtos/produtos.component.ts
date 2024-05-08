@@ -10,7 +10,7 @@ import { ConfirmationDialogComponent } from 'src/app/common/dialog/confirmation-
 import { ProdutoModel } from './model/produto.model';
 import { ProdutoService } from './model/produto.service';
 import { ProdutosCreateUpdateComponent } from './produtos-create-update/produtos-create-update.component';
-import { Produtos2Service } from 'src/app/services/produtos2.service';
+import { ProdutosDataService } from 'src/app/services/produtos-data.service';
 
 @Component({
   selector: 'abs-produtos',
@@ -45,7 +45,7 @@ export class ProdutosComponent {
   route: ActivatedRoute | null | undefined;
 
   constructor(private router: Router, private produtoService: ProdutoService, private dialog: MatDialog, private snackbar: MatSnackBar
-    , private prodServ: Produtos2Service
+    , private prodServ: ProdutosDataService
   ) { }
 
   findAllProdutos(page: number, limit: number) {

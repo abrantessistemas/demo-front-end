@@ -13,6 +13,8 @@ import { EmpresasComponent } from './pages/admin/empresas/empresas.component';
 import { EnderecosComponent } from './pages/admin/enderecos/enderecos.component';
 import { ProdutosComponent } from './pages/admin/produtos/produtos.component';
 import { EstoquesComponent } from './pages/admin/estoques/estoques.component';
+import { ClientesComponent } from './pages/admin/clientes/clientes.component';
+import { PedidosComponent } from './pages/admin/pedidos/pedidos.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -53,6 +55,14 @@ const routes: Routes = [
       {
         path: 'estoques',
         component: EstoquesComponent
+      },
+      {
+        path: 'clientes',
+        component: ClientesComponent
+      },
+      {
+        path: 'pedidos',
+        component: PedidosComponent
       },
       {
         path: 'dashboard',
