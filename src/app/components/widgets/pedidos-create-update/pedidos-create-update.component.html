@@ -1,0 +1,149 @@
+<form (ngSubmit)="save()" [formGroup]="produtoForm">
+  <div mat-dialog-title class="dialog-title">
+    <div class="avatar-container">
+      <img (click)="updateImage()" src="../../../../assets/avatar.png" class="avatar" mat-mini-fab
+        matTooltip="Change photo">
+    </div>
+
+    <div class="text-container">
+      <h2 *ngIf="produtoForm.get('login')?.value">
+        {{ produtoForm.get('login')?.value }}
+      </h2>
+      <h2 *ngIf="!produtoForm.get('login')?.value">Novo Pedido</h2>
+    </div>
+
+    <div class="button-container">
+      <button mat-dialog-close mat-mini-fab color="primary" type="button">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <mat-tab-group [disableRipple]="false">
+    <mat-tab label="Descrição">
+      <mat-dialog-content class="dialog-container">
+        <mat-form-field appearance="outline" class="block w-full">
+          <mat-label>Estoque</mat-label>
+          <mat-select formControlName="estoque">
+            <mat-option *ngFor="let estoque of estoques" [value]="estoque">{{estoque.nome}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="container-fields">
+          <mat-form-field appearance="outline" class="block w-full">
+            <mat-label>id</mat-label>
+            <input formControlName="id" matInput readonly>
+            <mat-error *ngIf="!produtoForm.get('id')?.valid">
+              * Preenchimento obrigatório.
+            </mat-error>
+            <mat-icon matSuffix>number</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
+            <mat-label>sku</mat-label>
+            <input formControlName="sku" matInput>
+            <mat-error *ngIf="!produtoForm.get('sku')?.valid">
+              * Preenchimento obrigatório.
+            </mat-error>
+            <mat-icon matSuffix>vpn_key</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="block w-full">
+          <mat-label>Nome do produto</mat-label>
+          <input cdkFocusInitial formControlName="nome" matInput required>
+          <mat-error *ngIf="!produtoForm.get('nome')?.valid">
+            * Preenchimento obrigatório.
+          </mat-error>
+          <mat-icon matSuffix>inventory</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="block w-full">
+          <mat-label>Descrição do produto</mat-label>
+          <input formControlName="descricao" matInput>
+          <mat-icon matSuffix>description</mat-icon>
+        </mat-form-field>
+
+        <div class="container-fields">
+          <mat-form-field appearance="outline" class="block w-full">
+            <mat-label>Preço compra</mat-label>
+            <input formControlName="precoCompra" matInput>
+            <mat-error *ngIf="!produtoForm.get('precoCompra')?.valid">
+              * Preenchimento obrigatório.
+            </mat-error>
+            <mat-icon matSuffix>monetization_on</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
+            <mat-label>Quatidade em estoque</mat-label>
+            <input formControlName="quatidadeEstoque" matInput required>
+            <mat-error *ngIf="!produtoForm.get('quatidadeEstoque')?.valid">
+              * Preenchimento obrigatório.
+            </mat-error>
+            <mat-icon matSuffix>store</mat-icon>
+          </mat-form-field>
+
+        </div>
+        <div class="container-fields">
+
+          <mat-form-field appearance="outline" class="block w-full">
+            <mat-label>Preço para revenda</mat-label>
+            <input formControlName="precoRevenda" matInput required (change)="calcularEstoque()">
+            <mat-error *ngIf="!produtoForm.get('precoRevenda')?.valid">
+              * Preenchimento obrigatório.
+            </mat-error>
+            <mat-icon matSuffix>payments</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
+            <mat-label>Valor total estoque</mat-label>
+            <input formControlName="precoTotalEstoque" matInput readonly>
+            <mat-error *ngIf="!produtoForm.get('precoTotalEstoque')?.valid">
+              * Preenchimento obrigatório.
+            </mat-error>
+            <mat-icon matSuffix>request_quote</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="block w-full">
+          <mat-label>Código de barras</mat-label>
+          <input formControlName="codigoBarras" matInput>
+          <mat-icon matSuffix>qr_code</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="block w-full">
+          <mat-label>imageUrl</mat-label>
+          <input formControlName="imageUrl" matInput>
+          <mat-icon matSuffix>photo_camera</mat-icon>
+        </mat-form-field>
+
+        <div class="categorias">
+          <mat-label>Cátegorias</mat-label>
+          <mat-selection-list formControlName="categorias">
+            <mat-list-option class="item" *ngFor="let categoria of categorias" [value]="categoria">
+              {{categoria.nome}}
+            </mat-list-option>
+          </mat-selection-list>
+        </div>
+      </mat-dialog-content>
+    </mat-tab>
+  </mat-tab-group>
+
+  <mat-dialog-actions align="end">
+    <button *ngIf="isCreateMode()" [disabled]="!produtoForm.valid" color="primary" mat-raised-button type="submit"
+      matTooltip="Create new Pedido">
+      <mat-icon>add</mat-icon>
+      Criar
+    </button>
+    <button *ngIf="isUpdateMode()" color="primary" mat-raised-button type="submit" matTooltip="Update">
+      <mat-icon>edit</mat-icon>
+      Atualizar
+    </button>
+    <button type="button" *ngIf="isUpdateMode()" (click)="deletePedido()" color="primary" mat-raised-button
+      matTooltip="Delete">
+      <mat-icon>delete</mat-icon>
+      Deletar
+    </button>
+
+  </mat-dialog-actions>
+</form>

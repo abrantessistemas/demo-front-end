@@ -1,0 +1,43 @@
+.dialog-title {
+  width: 100%;
+  display: inline-block;
+  padding: 10px;
+}
+
+.dialog-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-fields {
+  width: 100%;
+  display: inline-block;
+  padding: 5px;
+}
+
+.avatar {
+  border-radius: 50%;
+  margin-right: 15px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.avatar-container,
+.text-container {
+  float: left;
+}
+
+.button-container {
+  float: right;
+}
+
+.categorias {
+  border: 1px solid rgb(126, 155, 190);
+  border-radius: 5px;
+  padding: 15px;
+
+  .item {
+    border-radius: 30px;
+  }
+}

@@ -1,0 +1,92 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Cadastro de Usuarios</mat-card-title>
+    <mat-card-subtitle>CRUD de usuarios do sistema</mat-card-subtitle>
+  </mat-card-header>
+  <div class="button-container">
+    <button mat-fab color="primary" (click)="createPedido()" matTooltip="Criar novo Usuário">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <mat-card-content>
+    <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+      <!-- id Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let element">{{element.id}}</td>
+      </ng-container>
+
+      <!-- ativo Column -->
+      <ng-container matColumnDef="ativo">
+        <th mat-header-cell *matHeaderCellDef>Ativo</th>
+        <td mat-cell *matCellDef="let element">{{element.ativo}}</td>
+      </ng-container>
+
+      <!-- dataCriacao Column -->
+      <ng-container matColumnDef="dataCriacao">
+        <th mat-header-cell *matHeaderCellDef>Data Criação</th>
+        <td mat-cell *matCellDef="let element">{{element.dataCriacao}}</td>
+      </ng-container>
+
+      <!-- criadoPor Column -->
+      <ng-container matColumnDef="criadoPor">
+        <th mat-header-cell *matHeaderCellDef>Criado Por</th>
+        <td mat-cell *matCellDef="let element">{{element.criadoPor}}</td>
+      </ng-container>
+
+      <!-- cliente Column -->
+      <ng-container matColumnDef="cliente">
+        <th mat-header-cell *matHeaderCellDef>Cliente</th>
+        <td mat-cell *matCellDef="let element">{{element.cliente}}</td>
+      </ng-container>
+
+      <!-- itens Column -->
+      <ng-container matColumnDef="itens">
+        <th mat-header-cell *matHeaderCellDef>Itens</th>
+        <td mat-cell *matCellDef="let element">{{element.itens}}</td>
+      </ng-container>
+
+      <!-- dataPedido Column -->
+      <ng-container matColumnDef="dataPedido">
+        <th mat-header-cell *matHeaderCellDef>Data do Pedido</th>
+        <td mat-cell *matCellDef="let element">{{element.dataPedido}}</td>
+      </ng-container>
+
+      <!-- status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let element">{{element.status}}</td>
+      </ng-container>
+
+      <!-- Action Column -->
+      <ng-container matColumnDef="actions">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Ações</th>
+        <td *matCellDef="let row" mat-cell>
+          <button mat-icon-button color="accent" (click)="$event.stopPropagation()"
+            [matMenuTriggerData]="{ pedido: row }" [matMenuTriggerFor]="actionsMenu" mat-icon-button
+            style="background: transparent; border:none">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+      <tr (click)="updatePedido(row)" *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="limit" [length]="totalItems" (page)="onPage($event)"
+      showFirstLastButtons></mat-paginator>
+  </mat-card-content>
+</mat-card>
+
+<mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+  <ng-template let-pedido="pedido" matMenuContent>
+    <button (click)="updatePedido(pedido)" mat-menu-item>
+      <mat-icon>edit</mat-icon>
+      <span>Atualizar</span>
+    </button>
+    <button (click)="deletePedido(pedido)" mat-menu-item>
+      <mat-icon>delete</mat-icon>
+      <span>Deletar</span>
+    </button>
+  </ng-template>
+</mat-menu>

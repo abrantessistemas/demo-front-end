@@ -1,0 +1,94 @@
+<form (ngSubmit)="save()" [formGroup]="pedidoForm">
+  <div mat-dialog-title class="dialog-title">
+    <div class="text-container">
+      <h2 *ngIf="pedidoForm.get('id')?.value">
+        {{ pedidoForm.get('id')?.value }}
+      </h2>
+      <h2 *ngIf="!pedidoForm.get('id')?.value">Novo Pedido</h2>
+    </div>
+
+    <div class="button-container">
+      <button mat-dialog-close mat-mini-fab color="primary" type="button">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <mat-tab-group [disableRipple]="false">
+    <mat-tab label="Descrição">
+      <mat-dialog-content class="dialog-container">
+        <div class="container-fields">
+        <mat-form-field appearance="outline" class="block w-full">
+          <mat-label>id</mat-label>
+          <input cdkFocusInitial formControlName="id" matInput minlength="2" maxlength="50" required>
+          <mat-error *ngIf="!pedidoForm.get('id')?.valid">
+            * Preenchimento obrigatório.
+          </mat-error>
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+       
+        <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
+          <mat-label>dataPedido</mat-label>
+          <input cdkFocusInitial formControlName="dataPedido" matInput minlength="2" maxlength="50" required>
+          <mat-error *ngIf="!pedidoForm.get('dataPedido')?.valid">
+            * Preenchimento obrigatório.
+          </mat-error>
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
+          <mat-label>cliente</mat-label>
+          <input cdkFocusInitial formControlName="cliente" matInput minlength="2" maxlength="50" required>
+          <mat-error *ngIf="!pedidoForm.get('cliente')?.valid">
+            * Preenchimento obrigatório.
+          </mat-error>
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
+          <mat-label>itens</mat-label>
+          <input cdkFocusInitial formControlName="itens" matInput minlength="2" maxlength="50" required>
+          <mat-error *ngIf="!pedidoForm.get('itens')?.valid">
+            * Preenchimento obrigatório.
+          </mat-error>
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+
+        <div class="itens">
+          <mat-label>Itens</mat-label>
+          <mat-selection-list formControlName="itens">
+            <mat-list-option class="item" *ngFor="let item of itens" [value]="item">
+              {{item.nome}}
+            </mat-list-option>
+          </mat-selection-list>
+        </div>
+
+        <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option *ngFor="let status of statusList" [value]="status">{{status.nome}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-dialog-content>
+    </mat-tab>
+  </mat-tab-group>
+
+  <mat-dialog-actions align="end">
+    <button *ngIf="isCreateMode()" [disabled]="!pedidoForm.valid" color="primary" mat-raised-button type="submit"
+      matTooltip="Create new Pedido">
+      <mat-icon>add</mat-icon>
+      Criar
+    </button>
+    <button *ngIf="isUpdateMode()" color="primary" mat-raised-button type="submit" matTooltip="Update">
+      <mat-icon>edit</mat-icon>
+      Atualizar
+    </button>
+    <button type="button" *ngIf="isUpdateMode()" (click)="deletePedido()" color="primary" mat-raised-button
+      matTooltip="Delete">
+      <mat-icon>delete</mat-icon>
+      Deletar
+    </button>
+
+  </mat-dialog-actions>
+</form>
