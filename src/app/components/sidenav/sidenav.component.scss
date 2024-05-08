@@ -5,8 +5,6 @@
 
 mat-sidenav {
   width: 250px;
-  background-color: #333;
-  color: white;
   padding: 4px;
 
 }
@@ -38,7 +36,7 @@ mat-sidenav {
 }
 
 mat-nav-list a {
-  color: white;
+  color: black;
   /* Altere conforme seu design */
 }
 
@@ -46,7 +44,7 @@ mat-nav-list a {
   display: flex;
   align-items: center;
   transition: color .3s ease;
-  background-color: black;
+  background-color: rgb(228, 220, 220);
   border-radius: 40px;
   margin-top: 3px;
 

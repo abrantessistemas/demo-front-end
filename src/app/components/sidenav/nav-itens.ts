@@ -55,7 +55,7 @@ export const navItens = [
   },
   {
     routerLink: 'pedidos',
-    icon: 'fal fa-code',
+    icon: 'fas fa-shopping-cart',
     label: 'Pedidos',
     sub: {}
   },

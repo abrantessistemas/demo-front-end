@@ -1,5 +1,12 @@
 <form (ngSubmit)="save()" [formGroup]="pedidoForm">
   <div mat-dialog-title class="dialog-title">
+    <div class="button-status-container">
+      <button mat-icon-button type="button" [style.color]="pedidoForm.get('ativo')?.value ? 'green' : 'red'"
+        (click)="togglePedido()">
+        <mat-icon>{{ pedidoForm.get('ativo')?.value ? 'done' : 'clear' }}</mat-icon>
+      </button>
+    </div>
+
     <div class="text-container">
       <h2 *ngIf="pedidoForm.get('id')?.value">
         {{ pedidoForm.get('id')?.value }}
@@ -17,29 +24,34 @@
   <mat-tab-group [disableRipple]="false">
     <mat-tab label="Descrição">
       <mat-dialog-content class="dialog-container">
+        <mat-form-field appearance="outline" class="block w-full" style="margin-right: 5px;">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option *ngFor="let status of statusList" [value]="status.id">{{status.nome}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
         <div class="container-fields">
-        <mat-form-field appearance="outline" class="block w-full">
-          <mat-label>id</mat-label>
-          <input cdkFocusInitial formControlName="id" matInput minlength="2" maxlength="50" required>
-          <mat-error *ngIf="!pedidoForm.get('id')?.valid">
-            * Preenchimento obrigatório.
-          </mat-error>
-          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        </mat-form-field>
-       
-        <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
-          <mat-label>dataPedido</mat-label>
-          <input cdkFocusInitial formControlName="dataPedido" matInput minlength="2" maxlength="50" required>
-          <mat-error *ngIf="!pedidoForm.get('dataPedido')?.valid">
-            * Preenchimento obrigatório.
-          </mat-error>
-          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        </mat-form-field>
+          <mat-form-field appearance="outline" class="block w-full">
+            <mat-label>id</mat-label>
+            <input formControlName="id" matInput readonly>
+            <mat-error *ngIf="!pedidoForm.get('id')?.valid">
+              * Preenchimento obrigatório.
+            </mat-error>
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
+            <mat-label>Data do Pedido</mat-label>
+            <input matInput [matDatepicker]="dataPedido" formControlName="dataPedido">
+            <mat-datepicker-toggle matSuffix [for]="dataPedido"></mat-datepicker-toggle>
+            <mat-datepicker #dataPedido></mat-datepicker>
+          </mat-form-field>
         </div>
 
         <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
           <mat-label>cliente</mat-label>
-          <input cdkFocusInitial formControlName="cliente" matInput minlength="2" maxlength="50" required>
+          <input cdkFocusInitial formControlName="cliente" matInput required>
           <mat-error *ngIf="!pedidoForm.get('cliente')?.valid">
             * Preenchimento obrigatório.
           </mat-error>
@@ -48,7 +60,7 @@
 
         <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
           <mat-label>itens</mat-label>
-          <input cdkFocusInitial formControlName="itens" matInput minlength="2" maxlength="50" required>
+          <input formControlName="itens" matInput required>
           <mat-error *ngIf="!pedidoForm.get('itens')?.valid">
             * Preenchimento obrigatório.
           </mat-error>
@@ -63,13 +75,6 @@
             </mat-list-option>
           </mat-selection-list>
         </div>
-
-        <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
-          <mat-label>Status</mat-label>
-          <mat-select formControlName="status">
-            <mat-option *ngFor="let status of statusList" [value]="status">{{status.nome}}</mat-option>
-          </mat-select>
-        </mat-form-field>
       </mat-dialog-content>
     </mat-tab>
   </mat-tab-group>

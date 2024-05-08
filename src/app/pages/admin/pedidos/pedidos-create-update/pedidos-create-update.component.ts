@@ -5,9 +5,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { BadRequestContract } from 'src/app/common/bad-request-contract.model';
 import { ConfirmationDialogComponent } from 'src/app/common/dialog/confirmation-dialog/confirmation-dialog.component';
+import { ClienteModel } from '../../clientes/model/cliente.model';
+import { ProdutoModel } from '../../produtos/model/produto.model';
 import { PedidoModel } from '../model/pedido.model';
 import { PedidoService } from '../model/pedido.service';
-import { ProdutoModel } from '../../produtos/model/produto.model';
 
 @Component({
   selector: 'abs-pedidos-create-update',
@@ -19,6 +20,10 @@ export class PedidosCreateUpdateComponent {
   formatPhone!: string;
   confirm!: FormControl;
   itens!: ProdutoModel[];
+  clientes!: ClienteModel[];
+  cliente!: ClienteModel;
+  pedidoAtivo!: boolean;
+
   statusList = [{ id: 1, nome: 'Em Processamento', descricao: 'O pedido está sendo processado.' },
   { id: 2, nome: 'Enviado', descricao: 'O pedido foi enviado para entrega.' },
   { id: 3, nome: 'Entregue', descricao: 'O pedido foi entregue ao cliente.' },
@@ -43,13 +48,13 @@ export class PedidosCreateUpdateComponent {
 
     this.pedidoForm = this.fb.group({
       id: this.defaults.id || '',
-      dataCriacao: this.defaults.dataCriacao || '',
+      dataCriacao: this.defaults.dataCriacao || new Date(),
       criadoPor: this.defaults.criadoPor || '',
-      ativo: this.defaults.ativo || '',
+      ativo: this.defaults.ativo || true,
       cliente: this.defaults.cliente || '',
       itens: this.defaults.itens || '',
-      dataPedido: this.defaults.dataPedido || '',
-      status: this.defaults.status || ''
+      dataPedido: new Date(this.defaults.dataPedido) || new Date(),
+      status: this.defaults.status || 1
     });
   }
   save() {
@@ -153,5 +158,18 @@ export class PedidosCreateUpdateComponent {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  togglePedido() {
+    const ativo = this.pedidoForm.get('ativo')?.value;
+    this.pedidoForm.get('ativo')?.setValue(!ativo);
+    let mensagem = 'Pedido esta ativado para faturamento.';
+
+    if (ativo) {
+      mensagem = 'Pedido foi desativado.'
+    }
+    this.snackbar.open(mensagem, 'OK', {
+      duration: 5000,
+    });
   }
 }
