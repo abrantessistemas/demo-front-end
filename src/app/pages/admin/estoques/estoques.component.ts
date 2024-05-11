@@ -116,7 +116,16 @@ export class EstoquesComponent {
   }
 
   updateEstoque(estoque: EstoqueModel) {
-    this.estoqueService.findById(estoque.id).subscribe(estoqueById => {
+    if (this.util.modoOperacional === 'demo') {
+      this.dialog
+        .open(EstoquesCreateUpdateComponent, {
+          data: estoque,
+        })
+        .afterClosed().subscribe((estoque) => {
+
+        })
+    } else {
+      this.estoqueService.findById(estoque.id).subscribe(estoqueById => {
       this.dialog
         .open(EstoquesCreateUpdateComponent, {
           data: estoqueById,
@@ -139,6 +148,7 @@ export class EstoquesComponent {
           });
 
     });
+  }
   }
 
   deleteEstoque(estoque: EstoqueModel) {

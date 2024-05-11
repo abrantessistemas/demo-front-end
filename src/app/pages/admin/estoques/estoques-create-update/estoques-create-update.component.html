@@ -24,8 +24,8 @@
       <mat-dialog-content class="dialog-container">
         <mat-form-field>
           <mat-label>Nome</mat-label>
-          <input cdkFocusInitial formControlName="estoquename" matInput minlength="2" maxlength="50" required>
-          <mat-error *ngIf="!estoqueForm.get('estoquename')?.valid">
+          <input cdkFocusInitial formControlName="nome" matInput minlength="2" maxlength="50" required>
+          <mat-error *ngIf="!estoqueForm.get('nome')?.valid">
             * Preenchimento obrigatório.
           </mat-error>
           <mat-icon matSuffix>store</mat-icon>

@@ -126,7 +126,16 @@ export class ClientesComponent {
   }
 
   updateCliente(cliente: ClienteModel) {
-    this.clienteService.findById(cliente.id).subscribe(clienteById => {
+    if (this.util.modoOperacional === 'demo') {
+      this.dialog
+        .open(ClientesCreateUpdateComponent, {
+          data: cliente,
+        })
+        .afterClosed().subscribe((cliente) => {
+
+        })
+    } else {
+      this.clienteService.findById(cliente.id).subscribe(clienteById => {
 
       this.dialog
         .open(ClientesCreateUpdateComponent, {
@@ -150,6 +159,7 @@ export class ClientesComponent {
           });
 
     });
+  }
   }
 
   deleteCliente(cliente: ClienteModel) {

@@ -55,11 +55,16 @@
         <th mat-header-cell *matHeaderCellDef>sku</th>
         <td mat-cell *matCellDef="let element">{{element.sku}}</td>
       </ng-container>
-      <!-- imageUrl Column -->
+      <!-- No seu template HTML -->
+
       <ng-container matColumnDef="imageUrl">
         <th mat-header-cell *matHeaderCellDef>imageUrl</th>
-        <td mat-cell *matCellDef="let element">{{element.imageUrl}}</td>
+        <td mat-cell *matCellDef="let element">
+          <!-- Substitua o conteúdo da célula pela tag <img> -->
+          <img [src]="element.imageUrl" class="round-image" alt="Imagem">
+        </td>
       </ng-container>
+
       <!-- categoria Column -->
       <ng-container matColumnDef="categoria">
         <th mat-header-cell *matHeaderCellDef>categoria</th>

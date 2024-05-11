@@ -124,30 +124,39 @@ export class ProdutosComponent {
   }
 
   updateProduto(produto: ProdutoModel) {
-    //    this.produtoService.findById(produto.id).subscribe(produtoById => {
+    if (this.util.modoOperacional === 'demo') {
+      this.dialog
+        .open(ProdutosCreateUpdateComponent, {
+          data: produto,
+        })
+        .afterClosed().subscribe((produto) => {
 
-    this.dialog
-      .open(ProdutosCreateUpdateComponent, {
-        data: produto,
-      })
-      .afterClosed()
-      .subscribe((produto) => {
-        if (produto) {
-          this.findAllProdutos(this.pageIndex, this.limit);
-          this.snackbar.open('Registro atualizado com sucesso.', 'OK', {
-            duration: 5000,
-            panelClass: 'app-notification-success'
-          });
-        }
-      },
-        (exception: BadRequestContract) => {
-          this.snackbar.open(exception.message, exception.status.toString(), {
-            duration: 5000,
-            panelClass: 'app-notification-error'
-          });
-        });
+        })
+    } else {
+      this.produtoService.findById(produto.id).subscribe(produtoById => {
+        this.dialog
+          .open(ProdutosCreateUpdateComponent, {
+            data: produtoById,
+          })
+          .afterClosed()
+          .subscribe((produto) => {
+            if (produto) {
+              this.findAllProdutos(this.pageIndex, this.limit);
+              this.snackbar.open('Registro atualizado com sucesso.', 'OK', {
+                duration: 5000,
+                panelClass: 'app-notification-success'
+              });
+            }
+          },
+            (exception: BadRequestContract) => {
+              this.snackbar.open(exception.message, exception.status.toString(), {
+                duration: 5000,
+                panelClass: 'app-notification-error'
+              });
+            });
 
-    //  });
+      });
+    }
   }
 
   deleteProduto(produto: ProdutoModel) {

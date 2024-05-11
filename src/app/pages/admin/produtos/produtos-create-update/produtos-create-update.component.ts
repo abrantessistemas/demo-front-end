@@ -9,6 +9,8 @@ import { ProdutoModel } from '../model/produto.model';
 import { ProdutoService } from './../model/produto.service';
 import { EstoqueModel } from '../../estoques/model/estoque.model';
 import { DemoDataService } from 'src/app/services/demo-data.service';
+import { UtilService } from 'src/app/services/util.service';
+import { CategoriaModel } from '../../categorias/model/categoria.model';
 
 @Component({
   selector: 'abs-produtos-create-update',
@@ -21,24 +23,24 @@ export class ProdutosCreateUpdateComponent {
   confirm!: FormControl;
 
   mode: 'delete' | 'create' | 'update' = 'create';
-  categorias: any[] = [{ nome: 'Informatica' }, { nome: 'acessorios' }];
+  categorias!: CategoriaModel[];
 
   private subscription: Subscription = new Subscription();
 
   constructor(@Inject(MAT_DIALOG_DATA) public defaults: ProdutoModel, private fb: FormBuilder,
     private dialogRef: MatDialogRef<ProdutosCreateUpdateComponent>, private dialog: MatDialog,
-    private snackbar: MatSnackBar, private produtoService: ProdutoService, private data: DemoDataService) { }
+    private snackbar: MatSnackBar, private produtoService: ProdutoService, private data: DemoDataService, private util: UtilService) { }
 
   ngOnInit() {
+    if (this.util.modoOperacional === 'demo') {
+      this.categorias = this.data.categorias;
+      this.estoques = this.data.estoques;
+    }
+
     if (this.defaults) {
       this.mode = 'update';
     } else {
       this.defaults = {} as ProdutoModel;
-      this.defaults.id = 1;
-
-      this.produtoService.getNextId().subscribe(nextId => {
-        this.defaults.id += nextId;
-      })
     }
 
     this.produtoForm = this.fb.group({

@@ -6,8 +6,8 @@
     <div class="logo-section">
       <img *ngIf="!isExpanded" src="../../../../assets/logo.png" alt="Logo" class="logo">
       <div>
-        <h1 class="subtitle">{{empresa.nomeFantasia}}</h1>
-        <p>{{empresa.razaoSocial}}</p>
+        <h1 class="subtitle">{{empresa?.nomeFantasia}}</h1>
+        <p>{{empresa?.razaoSocial}}</p>
       </div>
     </div>
   </div>

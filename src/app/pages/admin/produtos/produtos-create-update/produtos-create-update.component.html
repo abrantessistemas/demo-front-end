@@ -25,7 +25,7 @@
         <mat-form-field appearance="outline" class="block w-full">
           <mat-label>Estoque</mat-label>
           <mat-select formControlName="estoque">
-            <mat-option *ngFor="let estoque of estoques" [value]="estoque">{{estoque.nome}}</mat-option>
+            <mat-option *ngFor="let estoque of estoques" [value]="estoque.id">{{estoque.nome}}</mat-option>
           </mat-select>
         </mat-form-field>
 
@@ -120,7 +120,7 @@
         <div class="categorias">
           <mat-label>Cátegorias</mat-label>
           <mat-selection-list formControlName="categorias">
-            <mat-list-option class="item" *ngFor="let categoria of categorias" [value]="categoria">
+            <mat-list-option class="item" *ngFor="let categoria of categorias" [value]="categoria.id">
               {{categoria.nome}}
             </mat-list-option>
           </mat-selection-list>

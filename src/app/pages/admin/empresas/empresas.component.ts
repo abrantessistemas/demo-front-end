@@ -126,7 +126,16 @@ export class EmpresasComponent {
   }
 
   updateEmpresa(empresa: EmpresaModel) {
-    this.empresaService.findById(empresa.id).subscribe(empresaById => {
+    if (this.util.modoOperacional === 'demo') {
+      this.dialog
+        .open(EmpresasCreateUpdateComponent, {
+          data: empresa,
+        })
+        .afterClosed().subscribe((empresa) => {
+
+        })
+    } else {
+      this.empresaService.findById(empresa.id).subscribe(empresaById => {
 
       this.dialog
         .open(EmpresasCreateUpdateComponent, {
@@ -150,6 +159,7 @@ export class EmpresasComponent {
           });
 
     });
+  }
   }
 
   deleteEmpresa(empresa: EmpresaModel) {

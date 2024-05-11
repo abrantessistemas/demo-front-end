@@ -112,29 +112,41 @@ export class CategoriasComponent {
   }
 
   updateCategoria(categoria: CategoriaModel) {
-    this.categoriaService.findById(categoria.id).subscribe((categoriaById: any) => {
+    if (this.util.modoOperacional === 'demo') {
       this.dialog
         .open(CategoriasCreateUpdateComponent, {
-          data: categoriaById,
+          data: categoria,
         })
-        .afterClosed()
-        .subscribe((categoria) => {
-          if (categoria) {
-            this.findAllCategorias(this.pageIndex, this.limit);
-            this.snackbar.open('Registro atualizado com sucesso.', 'OK', {
-              duration: 5000,
-              panelClass: 'app-notification-success'
-            });
-          }
-        },
-          (exception: BadRequestContract) => {
-            this.snackbar.open(exception.message, exception.status.toString(), {
-              duration: 5000,
-              panelClass: 'app-notification-error'
-            });
-          });
+        .afterClosed().subscribe((categoria) => {
 
-    });
+        })
+    } else {
+      this.categoriaService.findById(categoria.id).subscribe((categoriaById: any) => {
+        this.dialog
+          .open(CategoriasCreateUpdateComponent, {
+            data: categoriaById,
+          })
+          .afterClosed()
+          .subscribe((categoria) => {
+            if (categoria) {
+              this.findAllCategorias(this.pageIndex, this.limit);
+              this.snackbar.open('Registro atualizado com sucesso.', 'OK', {
+                duration: 5000,
+                panelClass: 'app-notification-success'
+              });
+            }
+          },
+            (exception: BadRequestContract) => {
+              this.snackbar.open(exception.message, exception.status.toString(), {
+                duration: 5000,
+                panelClass: 'app-notification-error'
+              });
+            });
+
+      });
+    }
+
+
   }
 
   deleteCategoria(categoria: CategoriaModel) {
