@@ -7,7 +7,13 @@ export class PedidoModel {
   criadoPor!: string;
   ativo!: boolean;
   cliente!: ClienteModel;
-  produtos!: ProdutoModel[];
+  produtos!: ProdutoAdicionado[];
   dataPedido!: Date;
   status!: string;
+}
+
+export class ProdutoAdicionado {
+  id!: number;
+  quantidade!: number;
+  produto!: ProdutoModel;
 }

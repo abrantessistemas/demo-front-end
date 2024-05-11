@@ -7,7 +7,7 @@ import { BadRequestContract } from 'src/app/common/bad-request-contract.model';
 import { ConfirmationDialogComponent } from 'src/app/common/dialog/confirmation-dialog/confirmation-dialog.component';
 import { ClienteModel } from '../../clientes/model/cliente.model';
 import { ProdutoModel } from '../../produtos/model/produto.model';
-import { PedidoModel } from '../model/pedido.model';
+import { PedidoModel, ProdutoAdicionado } from '../model/pedido.model';
 import { PedidoService } from '../model/pedido.service';
 import { DemoDataService } from 'src/app/services/demo-data.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -25,12 +25,39 @@ export class PedidosCreateUpdateComponent {
   clientes!: ClienteModel[];
   cliente!: ClienteModel;
   pedidoAtivo!: boolean;
+  formaPegamento = new FormControl(1);
+  totalParcelas = new FormControl(1);
+  produtosSelecionados: ProdutoAdicionado[] = [];
+  total = 0;
 
-  statusList = [{ id: 1, nome: 'Em Processamento', descricao: 'O pedido está sendo processado.' },
-  { id: 2, nome: 'Enviado', descricao: 'O pedido foi enviado para entrega.' },
-  { id: 3, nome: 'Entregue', descricao: 'O pedido foi entregue ao cliente.' },
-  { id: 4, nome: 'Cancelado', descricao: 'O pedido foi cancelado.' }
+
+  statusList = [
+    { id: 1, nome: 'Em Processamento', descricao: 'O pedido está sendo processado.' },
+    { id: 2, nome: 'Enviado', descricao: 'O pedido foi enviado para entrega.' },
+    { id: 3, nome: 'Entregue', descricao: 'O pedido foi entregue ao cliente.' },
+    { id: 4, nome: 'Cancelado', descricao: 'O pedido foi cancelado.' }
   ];
+
+  formasPagamentos = [
+    { id: 1, descricao: 'Dinheiro' },
+    { id: 2, descricao: 'Cartão de crédito' },
+    { id: 3, descricao: 'Cartão de débito' },
+    { id: 4, descricao: 'Transferência bancária' },
+    { id: 5, descricao: 'Boleto bancário' },
+    { id: 6, descricao: 'PIX' }
+  ]
+  parcelas = [
+    { id: 1, descricao: '1x' },
+    { id: 2, descricao: '2x' },
+    { id: 3, descricao: '3x' },
+    { id: 4, descricao: '4x' },
+    { id: 5, descricao: '5x' },
+    { id: 6, descricao: '6x' },
+    { id: 7, descricao: '7x' },
+    { id: 8, descricao: '8x' },
+    { id: 9, descricao: '9x' },
+    { id: 10, descricao: '10x' }
+  ]
   mode: 'delete' | 'create' | 'update' = 'create';
 
   private subscription: Subscription = new Subscription();
@@ -88,7 +115,7 @@ export class PedidosCreateUpdateComponent {
 
   createPedido() {
     const pedido = this.pedidoForm.value;
-
+    pedido.produtos = JSON.stringify(this.produtosSelecionados);
     this.subscription.add(
       this.pedidoService.create(pedido).subscribe(
         (result) => {
@@ -186,20 +213,30 @@ export class PedidosCreateUpdateComponent {
     });
   }
 
-  produtosSelecionados: ProdutoAdicionado[] = [];
-  total = 0;
-
   adicionarItem(item: ProdutoModel) {
     const index = this.produtosSelecionados.findIndex(produtoAdicionado => produtoAdicionado.produto === item);
+    let somar = false;
+
     if (index === -1) {
       // Se o item não estiver na lista, adiciona
-      this.produtosSelecionados.push({ id: this.produtosSelecionados.length + 1, quantidade: 1, produto: item });
+      if (item.quatidadeEstoque > 0) {
+        this.produtosSelecionados.push({ id: this.produtosSelecionados.length + 1, quantidade: 1, produto: item });
+        somar = true;
+      }
+
     } else {
       // Se o item já estiver na lista, incrementa a quantidade
-      this.produtosSelecionados[index].quantidade++;
+      const itemEmEstoque = this.produtosSelecionados[index].produto.quatidadeEstoque;
+      if (itemEmEstoque > 0 && this.produtosSelecionados[index].quantidade < item.quatidadeEstoque) {
+        this.produtosSelecionados[index].quantidade++;
+        somar = true;
+      }
     }
     // Atualiza o total somando o preço do produto adicionado
-    this.total += item.precoRevenda;
+    if (somar) {
+      this.total += item.precoRevenda;
+      somar = false;
+    }
   }
 
   removerItem(item: ProdutoAdicionado) {
@@ -217,8 +254,3 @@ export class PedidosCreateUpdateComponent {
   }
 }
 
-interface ProdutoAdicionado {
-  id: number;
-  quantidade: number;
-  produto: ProdutoModel;
-}
