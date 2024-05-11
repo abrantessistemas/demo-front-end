@@ -64,7 +64,7 @@
           <mat-label>Itens no pedido</mat-label>
         </div>
         <div class="container-lista">
-          <cdk-virtual-scroll-viewport [itemSize]="produtos.length" class="example-viewport">
+          <cdk-virtual-scroll-viewport [itemSize]="produtos?.length" class="example-viewport">
             <div>
               <!-- Utilize a diretiva *ngFor para iterar sobre os produtos e criar os botões -->
               <button type="button" mat-button class="produto-button" *ngFor="let produto of produtos"
@@ -84,7 +84,7 @@
             </div>
           </cdk-virtual-scroll-viewport>
 
-          <cdk-virtual-scroll-viewport [itemSize]="produtos.length" class="example-viewport">
+          <cdk-virtual-scroll-viewport [itemSize]="produtosSelecionados?.length" class="example-viewport">
             <div>
               <!-- Utilize a diretiva *ngFor para iterar sobre os produtos e criar os botões -->
               <div class="produto-button" *ngFor="let produto of produtosSelecionados">
