@@ -3,8 +3,8 @@
     <div class="text-container">
       <h2 *ngIf="pedidoForm.get('id')?.value">
         PEDIDO: {{ pedidoForm.get('id')?.value.toString().padStart(5, '0') }}
+        <span *ngIf="tab === 1" style="margin-left: 20rem;margin-right: 3rem;">Finalizando pedido</span>
       </h2>
-
       <h2 *ngIf="!pedidoForm.get('id')?.value">Novo Pedido</h2>
     </div>
 
@@ -67,8 +67,8 @@
           <cdk-virtual-scroll-viewport [itemSize]="produtos?.length" class="example-viewport">
             <div>
               <!-- Utilize a diretiva *ngFor para iterar sobre os produtos e criar os botões -->
-              <button [disabled]="produto.quatidadeEstoque < 1" type="button" mat-button class="produto-button" *ngFor="let produto of produtos"
-                (click)="adicionarItem(produto)">
+              <button [disabled]="produto.quatidadeEstoque < 1" type="button" mat-button class="produto-button"
+                *ngFor="let produto of produtos" (click)="adicionarItem(produto)">
                 <div class="container-lista">
                   <img src="{{ produto.imageUrl }}" alt="{{ produto.nome }}">
                   <div>
@@ -114,14 +114,15 @@
         </mat-form-field>
         <div class="container-fields" *ngIf="formaPegamento.value === 2">
           <mat-form-field appearance="outline" class="block w-full">
-            <mat-label>Parcelamento em ate: </mat-label>
-            <mat-select [formControl]="totalParcelas">
-              <mat-option *ngFor="let totalParcela of parcelas"
-                [value]="totalParcela.id">{{totalParcela.descricao}}</mat-option>
+            <mat-label>Parcelamento em: </mat-label>
+            <mat-select [formControl]="totalParcelas" (selectionChange)="calcularJuros($event)">
+              <mat-option *ngFor="let totalParcela of parcelas" [value]="totalParcela.id">
+                {{totalParcela.descricao}}
+              </mat-option>
             </mat-select>
           </mat-form-field>
           <span class="valor" *ngIf="totalParcelas.value !== null">
-            de {{ total / totalParcelas.value | currency:'BRL':'symbol':'1.2-2' }}
+            de {{valorJuros | currency:'BRL':'symbol':'1.2-2'}}
           </span>
         </div>
       </mat-dialog-content>
@@ -134,8 +135,8 @@
   </div>
 
   <mat-dialog-actions align="end">
-    <button *ngIf="tab!=1" color="primary" [disabled]="!pedidoForm.valid" mat-raised-button type="button"
-      (click)="selecionarAba(1)">
+    <button *ngIf="tab!=1" color="primary" [disabled]="!pedidoForm.valid || produtosSelecionados.length === 0"
+      mat-raised-button type="button" (click)="selecionarAba(1)">
       Fechar pedido
     </button>
     <button *ngIf="tab!=0" color="primary" mat-raised-button type="button" (click)="selecionarAba(0)">

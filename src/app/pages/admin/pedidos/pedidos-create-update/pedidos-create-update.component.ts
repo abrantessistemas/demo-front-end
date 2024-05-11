@@ -71,16 +71,16 @@ export class PedidosCreateUpdateComponent {
     { id: 6, descricao: 'PIX' }
   ]
   parcelas = [
-    { id: 1, descricao: '1x' },
-    { id: 2, descricao: '2x' },
-    { id: 3, descricao: '3x' },
-    { id: 4, descricao: '4x' },
-    { id: 5, descricao: '5x' },
-    { id: 6, descricao: '6x' },
-    { id: 7, descricao: '7x' },
-    { id: 8, descricao: '8x' },
-    { id: 9, descricao: '9x' },
-    { id: 10, descricao: '10x' }
+    { id: 1, descricao: '1  x' },
+    { id: 2, descricao: '2  x' },
+    { id: 3, descricao: '3  x' },
+    { id: 4, descricao: '4  x' },
+    { id: 5, descricao: '5  x' },
+    { id: 6, descricao: '6  x' },
+    { id: 7, descricao: '7  x' },
+    { id: 8, descricao: '8  x' },
+    { id: 9, descricao: '9  x' },
+    { id: 10, descricao: '10  x' }
   ]
   mode: 'delete' | 'create' | 'update' = 'create';
 
@@ -295,6 +295,28 @@ export class PedidosCreateUpdateComponent {
   selecionarAba(index: number) {
     this.tabGroup.selectedIndex = index;
     this.tab = index;
+    this.calcularJuros({ value: 1 });
+  }
+
+  // Defina os valores dos juros para cada faixa de parcelas
+  taxasJuros: { faixaInicial: number; faixaFinal: number; taxa: number }[] = [
+    { faixaInicial: 1, faixaFinal: 1, taxa: 0 },
+    { faixaInicial: 2, faixaFinal: 5, taxa: 35 },
+    { faixaInicial: 6, faixaFinal: 8, taxa: 64 },
+    { faixaInicial: 9, faixaFinal: 10, taxa: 79 },
+  ];
+
+  valorJuros = 0;
+  calcularJuros(parcelas: any) {
+    // Encontre a taxa de juros correspondente com base no número de parcelas
+    const taxaJuros = this.taxasJuros.find(
+      (taxa) => parcelas.value >= taxa.faixaInicial && parcelas.value <= taxa.faixaFinal
+    );
+
+    // Se uma taxa de juros correspondente for encontrada, calcule os juros
+    if (taxaJuros) {
+      this.valorJuros = (this.total + ((this.total * taxaJuros.taxa) / 1000)) / parcelas.value;
+    }
   }
 }
 
