@@ -10,6 +10,8 @@ import { ConfirmationDialogComponent } from 'src/app/common/dialog/confirmation-
 import { ClientesCreateUpdateComponent } from './clientes-create-update/clientes-create-update.component';
 import { ClienteModel } from './model/cliente.model';
 import { ClienteService } from './model/cliente.service';
+import { UtilService } from 'src/app/services/util.service';
+import { DemoDataService } from 'src/app/services/demo-data.service';
 
 @Component({
   selector: 'abs-clientes',
@@ -45,7 +47,9 @@ export class ClientesComponent {
   pageIndex!: number;
   route: ActivatedRoute | null | undefined;
 
-  constructor(private router: Router, private clienteService: ClienteService, private dialog: MatDialog, private snackbar: MatSnackBar) { }
+  constructor(private router: Router, private clienteService: ClienteService, private dialog: MatDialog, private snackbar: MatSnackBar,
+    private data: DemoDataService, private util: UtilService
+  ) { }
 
   findAllClientes(page: number, limit: number) {
     this.subscription.add(this.clienteService.findAll().subscribe(result => {
@@ -62,16 +66,20 @@ export class ClientesComponent {
   }
 
   ngOnInit() {
-    const paginaAtual = localStorage.getItem('paginaAtual');
-    const tamanhoPagina = localStorage.getItem('tamanhoPagina') || 5;
-
-    if (paginaAtual && tamanhoPagina) {
-      this.limit = +tamanhoPagina;
-      this.pageIndex = +paginaAtual;
-
-      this.onSearch(this.pageIndex, this.limit);
+    if (this.util.modoOperacional === 'demo') {
+      this.dataSource = this.data.clientes;
     } else {
-      this.onSearch(1, this.limit);
+      const paginaAtual = localStorage.getItem('paginaAtual');
+      const tamanhoPagina = localStorage.getItem('tamanhoPagina') || 5;
+
+      if (paginaAtual && tamanhoPagina) {
+        this.limit = +tamanhoPagina;
+        this.pageIndex = +paginaAtual;
+
+        this.onSearch(this.pageIndex, this.limit);
+      } else {
+        this.onSearch(1, this.limit);
+      }
     }
   }
 

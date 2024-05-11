@@ -70,8 +70,15 @@
         <div class="itens">
           <mat-label>Itens</mat-label>
           <mat-selection-list formControlName="itens">
-            <mat-list-option class="item" *ngFor="let item of itens" [value]="item">
-              {{item.nome}}
+            <mat-list-option class="card" *ngFor="let produto of itens" [value]="produto">
+              <img mat-card-image src="{{ produto.imageUrl }}" alt="{{ produto.nome }}">
+              <div>
+                <span class="nome">{{ produto.nome }}</span>
+                <br>
+                <span class="descricao">{{ produto.descricao }}</span>
+                <br>
+                <span class="valor">{{ produto.precoRevenda | currency:'BRL':'symbol':'1.2-2' }}</span>
+              </div>
             </mat-list-option>
           </mat-selection-list>
         </div>

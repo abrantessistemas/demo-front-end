@@ -9,6 +9,8 @@ import { ClienteModel } from '../../clientes/model/cliente.model';
 import { ProdutoModel } from '../../produtos/model/produto.model';
 import { PedidoModel } from '../model/pedido.model';
 import { PedidoService } from '../model/pedido.service';
+import { DemoDataService } from 'src/app/services/demo-data.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'abs-pedidos-create-update',
@@ -37,9 +39,14 @@ export class PedidosCreateUpdateComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public defaults: PedidoModel, private fb: FormBuilder,
     private dialogRef: MatDialogRef<PedidosCreateUpdateComponent>, private dialog: MatDialog,
-    private snackbar: MatSnackBar, private pedidoService: PedidoService) { }
+    private snackbar: MatSnackBar, private pedidoService: PedidoService, private data: DemoDataService
+    , private util: UtilService) { }
 
   ngOnInit() {
+    if (this.util.modoOperacional === 'demo') {
+      this.itens = this.data.produtos;
+    }
+
     if (this.defaults) {
       this.mode = 'update';
     } else {

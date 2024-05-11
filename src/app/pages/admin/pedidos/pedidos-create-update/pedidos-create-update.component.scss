@@ -35,3 +35,42 @@
   float: left;
   margin-right: 8px;
 }
+
+/* Seu arquivo de estilo .scss */
+
+.card {
+  height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+}
+
+img {
+  width: 6rem;
+  height: auto;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+.info-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nome {
+  font-weight: bold;
+  color: navy; /* Azul marinho */
+}
+
+.descricao {
+  font-size: small;
+  margin-top: 8px;
+}
+
+.valor {
+  margin-top: 8px;
+  color: green; /* Cor verde para o valor */
+}

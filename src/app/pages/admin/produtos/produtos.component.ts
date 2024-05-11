@@ -10,7 +10,8 @@ import { ConfirmationDialogComponent } from 'src/app/common/dialog/confirmation-
 import { ProdutoModel } from './model/produto.model';
 import { ProdutoService } from './model/produto.service';
 import { ProdutosCreateUpdateComponent } from './produtos-create-update/produtos-create-update.component';
-import { ProdutosDataService } from 'src/app/services/produtos-data.service';
+import { UtilService } from 'src/app/services/util.service';
+import { DemoDataService } from 'src/app/services/demo-data.service';
 
 @Component({
   selector: 'abs-produtos',
@@ -45,7 +46,7 @@ export class ProdutosComponent {
   route: ActivatedRoute | null | undefined;
 
   constructor(private router: Router, private produtoService: ProdutoService, private dialog: MatDialog, private snackbar: MatSnackBar
-    , private prodServ: ProdutosDataService
+    , private data: DemoDataService, private util: UtilService
   ) { }
 
   findAllProdutos(page: number, limit: number) {
@@ -63,17 +64,20 @@ export class ProdutosComponent {
   }
 
   ngOnInit() {
-    const paginaAtual = localStorage.getItem('paginaAtual');
-    const tamanhoPagina = localStorage.getItem('tamanhoPagina') || 5;
-    this.dataSource = this.prodServ.produtos;
-    
-      if(paginaAtual && tamanhoPagina) {
-      this.limit = +tamanhoPagina;
-      this.pageIndex = +paginaAtual;
-
-      this.onSearch(this.pageIndex, this.limit);
+    if (this.util.modoOperacional === 'demo') {
+      this.dataSource = this.data.produtos;
     } else {
-      this.onSearch(1, this.limit);
+      const paginaAtual = localStorage.getItem('paginaAtual');
+      const tamanhoPagina = localStorage.getItem('tamanhoPagina') || 5;
+
+      if (paginaAtual && tamanhoPagina) {
+        this.limit = +tamanhoPagina;
+        this.pageIndex = +paginaAtual;
+
+        this.onSearch(this.pageIndex, this.limit);
+      } else {
+        this.onSearch(1, this.limit);
+      }
     }
   }
 
@@ -87,7 +91,7 @@ export class ProdutosComponent {
       queryParamsHandling: 'merge'
     });
 
-  //  this.findAllProdutos(page, limit);
+    this.findAllProdutos(page, limit);
   }
 
 
@@ -120,30 +124,30 @@ export class ProdutosComponent {
   }
 
   updateProduto(produto: ProdutoModel) {
-//    this.produtoService.findById(produto.id).subscribe(produtoById => {
+    //    this.produtoService.findById(produto.id).subscribe(produtoById => {
 
-      this.dialog
-        .open(ProdutosCreateUpdateComponent, {
-          data: produto,
-        })
-        .afterClosed()
-        .subscribe((produto) => {
-          if (produto) {
-            this.findAllProdutos(this.pageIndex, this.limit);
-            this.snackbar.open('Registro atualizado com sucesso.', 'OK', {
-              duration: 5000,
-              panelClass: 'app-notification-success'
-            });
-          }
-        },
-          (exception: BadRequestContract) => {
-            this.snackbar.open(exception.message, exception.status.toString(), {
-              duration: 5000,
-              panelClass: 'app-notification-error'
-            });
+    this.dialog
+      .open(ProdutosCreateUpdateComponent, {
+        data: produto,
+      })
+      .afterClosed()
+      .subscribe((produto) => {
+        if (produto) {
+          this.findAllProdutos(this.pageIndex, this.limit);
+          this.snackbar.open('Registro atualizado com sucesso.', 'OK', {
+            duration: 5000,
+            panelClass: 'app-notification-success'
           });
+        }
+      },
+        (exception: BadRequestContract) => {
+          this.snackbar.open(exception.message, exception.status.toString(), {
+            duration: 5000,
+            panelClass: 'app-notification-error'
+          });
+        });
 
-  //  });
+    //  });
   }
 
   deleteProduto(produto: ProdutoModel) {

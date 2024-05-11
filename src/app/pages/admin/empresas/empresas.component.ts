@@ -10,6 +10,8 @@ import { ConfirmationDialogComponent } from 'src/app/common/dialog/confirmation-
 import { EmpresaModel } from './model/empresa.model';
 import { EmpresaService } from './model/empresa.service';
 import { EmpresasCreateUpdateComponent } from './empresas-create-update/empresas-create-update.component';
+import { UtilService } from 'src/app/services/util.service';
+import { DemoDataService } from 'src/app/services/demo-data.service';
 
 @Component({
   selector: 'abs-empresas',
@@ -45,7 +47,9 @@ export class EmpresasComponent {
   pageIndex!: number;
   route: ActivatedRoute | null | undefined;
 
-  constructor(private router: Router, private empresaService: EmpresaService, private dialog: MatDialog, private snackbar: MatSnackBar) { }
+  constructor(private router: Router, private empresaService: EmpresaService, private dialog: MatDialog, private snackbar: MatSnackBar,
+    private data: DemoDataService, private util: UtilService
+  ) { }
 
   findAllEmpresas(page: number, limit: number) {
     this.subscription.add(this.empresaService.findAll().subscribe(result => {
@@ -62,16 +66,20 @@ export class EmpresasComponent {
   }
 
   ngOnInit() {
-    const paginaAtual = localStorage.getItem('paginaAtual');
-    const tamanhoPagina = localStorage.getItem('tamanhoPagina') || 5;
-
-    if (paginaAtual && tamanhoPagina) {
-      this.limit = +tamanhoPagina;
-      this.pageIndex = +paginaAtual;
-
-      this.onSearch(this.pageIndex, this.limit);
+    if (this.util.modoOperacional === 'demo') {
+      this.dataSource = this.data.empresa;
     } else {
-      this.onSearch(1, this.limit);
+      const paginaAtual = localStorage.getItem('paginaAtual');
+      const tamanhoPagina = localStorage.getItem('tamanhoPagina') || 5;
+
+      if (paginaAtual && tamanhoPagina) {
+        this.limit = +tamanhoPagina;
+        this.pageIndex = +paginaAtual;
+
+        this.onSearch(this.pageIndex, this.limit);
+      } else {
+        this.onSearch(1, this.limit);
+      }
     }
   }
 
@@ -119,7 +127,7 @@ export class EmpresasComponent {
 
   updateEmpresa(empresa: EmpresaModel) {
     this.empresaService.findById(empresa.id).subscribe(empresaById => {
-      
+
       this.dialog
         .open(EmpresasCreateUpdateComponent, {
           data: empresaById,

@@ -8,7 +8,7 @@ import { ConfirmationDialogComponent } from 'src/app/common/dialog/confirmation-
 import { ProdutoModel } from '../model/produto.model';
 import { ProdutoService } from './../model/produto.service';
 import { EstoqueModel } from '../../estoques/model/estoque.model';
-import { ProdutosDataService } from 'src/app/services/produtos-data.service';
+import { DemoDataService } from 'src/app/services/demo-data.service';
 
 @Component({
   selector: 'abs-produtos-create-update',
@@ -27,7 +27,7 @@ export class ProdutosCreateUpdateComponent {
 
   constructor(@Inject(MAT_DIALOG_DATA) public defaults: ProdutoModel, private fb: FormBuilder,
     private dialogRef: MatDialogRef<ProdutosCreateUpdateComponent>, private dialog: MatDialog,
-    private snackbar: MatSnackBar, private produtoService: ProdutoService, private productService: ProdutosDataService) { }
+    private snackbar: MatSnackBar, private produtoService: ProdutoService, private data: DemoDataService) { }
 
   ngOnInit() {
     if (this.defaults) {
@@ -74,30 +74,30 @@ export class ProdutosCreateUpdateComponent {
 
   createProduto() {
     const produto = this.produtoForm.value;
-    this.productService.addProduct(produto);
-    // this.subscription.add(
-    //   this.produtoService.create(produto).subscribe(
-    //     (result) => {
-    //       this.snackbar.open(
-    //         'Produto ' +
-    //         result.nome +
-    //         ' successfully created.',
-    //         'OK',
-    //         {
-    //           duration: 5000,
-    //         }
-    //       );
+    this.data.addProduct(produto);
+    this.subscription.add(
+      this.produtoService.create(produto).subscribe(
+        (result) => {
+          this.snackbar.open(
+            'Produto ' +
+            result.nome +
+            ' successfully created.',
+            'OK',
+            {
+              duration: 5000,
+            }
+          );
 
-           this.dialogRef.close(produto);
-    //     },
-    //     (exception: BadRequestContract) => {
-    //       console.log(exception.data)
-    //       this.snackbar.open(exception.message, 'ERROR', {
-    //         duration: 5000,
-    //       });
-    //     }
-    //   )
-    // );
+          this.dialogRef.close(produto);
+        },
+        (exception: BadRequestContract) => {
+          console.log(exception.data)
+          this.snackbar.open(exception.message, 'ERROR', {
+            duration: 5000,
+          });
+        }
+      )
+    );
   }
 
   updateProduto() {

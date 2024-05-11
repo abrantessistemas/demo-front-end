@@ -14,6 +14,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { PedidosCreateUpdateComponent } from './pedidos-create-update.component';
 import { MatListModule } from '@angular/material/list';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
 
 
 @NgModule({
@@ -34,7 +36,9 @@ import { MatListModule } from '@angular/material/list';
     MatSelectModule,
     MatTabsModule,
     PipesModule,
-    MatListModule
+    MatListModule,
+    MatGridListModule,
+    MatCardModule
   ]
 })
 export class PedidosCreateUpdateModule { }

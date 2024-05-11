@@ -5,10 +5,20 @@
     </button>
     <div class="logo-section">
       <img *ngIf="!isExpanded" src="../../../../assets/logo.png" alt="Logo" class="logo">
-      <h1 class="subtitle">Abrantes ERP</h1>
+      <div>
+        <h1 class="subtitle">{{empresa.nomeFantasia}}</h1>
+        <p>{{empresa.razaoSocial}}</p>
+      </div>
     </div>
   </div>
+
   <div class="right-section">
+    <p>
+      <mat-button-toggle-group (change)="setDadosMode()" [(ngModel)]="dataMode">
+        <mat-button-toggle value="demo">Dados Demo</mat-button-toggle>
+        <mat-button-toggle value="real">Dados Real</mat-button-toggle>
+      </mat-button-toggle-group>
+    </p>
     <button mat-icon-button (click)="openProfile()">
       <mat-icon>account_circle</mat-icon>
     </button>
