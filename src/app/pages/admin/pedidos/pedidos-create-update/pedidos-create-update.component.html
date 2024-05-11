@@ -1,7 +1,7 @@
 <form (ngSubmit)="save()" [formGroup]="pedidoForm">
   <div mat-dialog-title class="dialog-title">
     <div class="button-status-container">
-      <button mat-icon-button type="button" [style.color]="pedidoForm.get('ativo')?.value ? 'green' : 'red'"
+      <button mat-icon-button type="button" [style.background-color]="pedidoForm.get('ativo')?.value ? 'green' : 'red'"
         (click)="togglePedido()">
         <mat-icon>{{ pedidoForm.get('ativo')?.value ? 'done' : 'clear' }}</mat-icon>
       </button>
@@ -43,44 +43,58 @@
 
           <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
             <mat-label>Data do Pedido</mat-label>
-            <input matInput [matDatepicker]="dataPedido" formControlName="dataPedido">
+            <input matInput [matDatepicker]="dataPedido" formControlName="dataPedido" readonly>
             <mat-datepicker-toggle matSuffix [for]="dataPedido"></mat-datepicker-toggle>
             <mat-datepicker #dataPedido></mat-datepicker>
           </mat-form-field>
         </div>
 
-        <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
-          <mat-label>cliente</mat-label>
-          <input cdkFocusInitial formControlName="cliente" matInput required>
-          <mat-error *ngIf="!pedidoForm.get('cliente')?.valid">
-            * Preenchimento obrigatório.
-          </mat-error>
-          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-form-field>
+          <mat-label>Cliente</mat-label>
+          <mat-select formControlName="cliente">
+            <mat-option [value]="cliente.id" *ngFor="let cliente of clientes">{{cliente.id}} - {{ cliente.nomeFantasia
+              }} -
+              {{cliente.cnpj}}</mat-option>
+          </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
-          <mat-label>itens</mat-label>
-          <input formControlName="itens" matInput required>
-          <mat-error *ngIf="!pedidoForm.get('itens')?.valid">
-            * Preenchimento obrigatório.
-          </mat-error>
-          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-        </mat-form-field>
+        <mat-label>Produtos</mat-label>
+        <div class="container-lista">
+          <cdk-virtual-scroll-viewport [itemSize]="produtos.length" class="example-viewport">
+            <div>
+              <!-- Utilize a diretiva *ngFor para iterar sobre os produtos e criar os botões -->
+              <button type="button" mat-button class="produto-button" *ngFor="let produto of produtos"
+                (click)="adicionarItem(produto)">
+                <div class="container-lista">
+                  <img src="{{ produto.imageUrl }}" alt="{{ produto.nome }}">
+                  <div>
+                    <span class="nome">{{ produto.nome }}</span>
+                    <br>
+                    <span class="descricao">{{ produto.descricao }}</span>
+                    <br>
+                    <span class="valor">{{ produto.precoRevenda | currency:'BRL':'symbol':'1.2-2' }}</span>
+                  </div>
+                </div>
+              </button>
+            </div>
+          </cdk-virtual-scroll-viewport>
 
-        <div class="itens">
-          <mat-label>Itens</mat-label>
-          <mat-selection-list formControlName="itens">
-            <mat-list-option class="card" *ngFor="let produto of itens" [value]="produto">
-              <img mat-card-image src="{{ produto.imageUrl }}" alt="{{ produto.nome }}">
-              <div>
-                <span class="nome">{{ produto.nome }}</span>
-                <br>
-                <span class="descricao">{{ produto.descricao }}</span>
-                <br>
-                <span class="valor">{{ produto.precoRevenda | currency:'BRL':'symbol':'1.2-2' }}</span>
-              </div>
-            </mat-list-option>
-          </mat-selection-list>
+
+          <!-- Segunda lista - lista de itens selecionados -->
+          <div class="itens">
+            <mat-label>Itens no pedido</mat-label>
+            <mat-selection-list #selecionadosList>
+              <mat-list-option *ngFor="let item of produtosSelecionados" [value]="item">
+                {{ item.quantidade }} X {{ item.produto.nome }} <span class="valor">{{ item.produto.precoRevenda |
+                  currency:'BRL':'symbol':'1.2-2' }}</span>
+              </mat-list-option>
+            </mat-selection-list>
+          </div>
+        </div>
+        <br>
+        <br>
+        <div class="total">
+          Total: <span class="valor">{{ total | currency:'BRL':'symbol':'1.2-2' }}</span>
         </div>
       </mat-dialog-content>
     </mat-tab>

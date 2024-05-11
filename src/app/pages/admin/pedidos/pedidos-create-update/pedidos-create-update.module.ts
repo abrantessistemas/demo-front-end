@@ -16,6 +16,7 @@ import { PedidosCreateUpdateComponent } from './pedidos-create-update.component'
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { MatCardModule } from '@angular/material/card';
     PipesModule,
     MatListModule,
     MatGridListModule,
-    MatCardModule
+    MatCardModule,
+    ScrollingModule
   ]
 })
 export class PedidosCreateUpdateModule { }

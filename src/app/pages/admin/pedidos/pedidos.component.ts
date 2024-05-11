@@ -10,6 +10,8 @@ import { ConfirmationDialogComponent } from 'src/app/common/dialog/confirmation-
 import { PedidosCreateUpdateComponent } from './pedidos-create-update/pedidos-create-update.component';
 import { PedidoModel } from './model/pedido.model';
 import { PedidoService } from './model/pedido.service';
+import { UtilService } from 'src/app/services/util.service';
+import { DemoDataService } from 'src/app/services/demo-data.service';
 
 @Component({
   selector: 'abs-pedidos',
@@ -41,7 +43,9 @@ export class PedidosComponent {
   pageIndex!: number;
   route: ActivatedRoute | null | undefined;
 
-  constructor(private router: Router, private pedidoService: PedidoService, private dialog: MatDialog, private snackbar: MatSnackBar) { }
+  constructor(private router: Router, private pedidoService: PedidoService, private dialog: MatDialog, private snackbar: MatSnackBar,
+    private data: DemoDataService, private util: UtilService
+  ) { }
 
   findAllPedidos(page: number, limit: number) {
     this.subscription.add(this.pedidoService.findAll().subscribe(result => {
@@ -58,16 +62,20 @@ export class PedidosComponent {
   }
 
   ngOnInit() {
-    const paginaAtual = localStorage.getItem('paginaAtual');
-    const tamanhoPagina = localStorage.getItem('tamanhoPagina') || 5;
-
-    if (paginaAtual && tamanhoPagina) {
-      this.limit = +tamanhoPagina;
-      this.pageIndex = +paginaAtual;
-
-      this.onSearch(this.pageIndex, this.limit);
+    if (this.util.modoOperacional === 'demo') {
+      this.dataSource = this.data.pedidos;
     } else {
-      this.onSearch(1, this.limit);
+      const paginaAtual = localStorage.getItem('paginaAtual');
+      const tamanhoPagina = localStorage.getItem('tamanhoPagina') || 5;
+
+      if (paginaAtual && tamanhoPagina) {
+        this.limit = +tamanhoPagina;
+        this.pageIndex = +paginaAtual;
+
+        this.onSearch(this.pageIndex, this.limit);
+      } else {
+        this.onSearch(1, this.limit);
+      }
     }
   }
 
@@ -114,29 +122,39 @@ export class PedidosComponent {
   }
 
   updatePedido(pedido: PedidoModel) {
-    this.pedidoService.findById(pedido.id).subscribe(pedidoById => {
+    if (this.util.modoOperacional === 'demo') {
       this.dialog
         .open(PedidosCreateUpdateComponent, {
-          data: pedidoById,
+          data: pedido,
         })
-        .afterClosed()
-        .subscribe((pedido) => {
-          if (pedido) {
-            this.findAllPedidos(this.pageIndex, this.limit);
-            this.snackbar.open('Registro atualizado com sucesso.', 'OK', {
-              duration: 5000,
-              panelClass: 'app-notification-success'
-            });
-          }
-        },
-          (exception: BadRequestContract) => {
-            this.snackbar.open(exception.message, exception.status.toString(), {
-              duration: 5000,
-              panelClass: 'app-notification-error'
-            });
-          });
+        .afterClosed().subscribe((pedido) => {
 
-    });
+        })
+    } else {
+      this.pedidoService.findById(pedido.id).subscribe(pedidoById => {
+        this.dialog
+          .open(PedidosCreateUpdateComponent, {
+            data: pedidoById,
+          })
+          .afterClosed()
+          .subscribe((pedido) => {
+            if (pedido) {
+              this.findAllPedidos(this.pageIndex, this.limit);
+              this.snackbar.open('Registro atualizado com sucesso.', 'OK', {
+                duration: 5000,
+                panelClass: 'app-notification-success'
+              });
+            }
+          },
+            (exception: BadRequestContract) => {
+              this.snackbar.open(exception.message, exception.status.toString(), {
+                duration: 5000,
+                panelClass: 'app-notification-error'
+              });
+            });
+
+      });
+    }
   }
 
   deletePedido(pedido: PedidoModel) {

@@ -34,6 +34,7 @@
 .button-status-container {
   float: left;
   margin-right: 8px;
+  color: white;
 }
 
 /* Seu arquivo de estilo .scss */
@@ -62,7 +63,8 @@ img {
 
 .nome {
   font-weight: bold;
-  color: navy; /* Azul marinho */
+  color: navy;
+  /* Azul marinho */
 }
 
 .descricao {
@@ -72,5 +74,68 @@ img {
 
 .valor {
   margin-top: 8px;
-  color: green; /* Cor verde para o valor */
+  color: green;
+  /* Cor verde para o valor */
+}
+
+.clientes {
+  border: 1px solid rgb(126, 155, 190);
+  border-radius: 5px;
+  padding: 15px;
+
+  .item {
+    border-radius: 30px;
+  }
+}
+
+.container-lista{
+  display: flex;
+}
+
+.produtos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.produto-button {
+  display: flex;
+  width: auto;
+  padding: 3px;
+  height: auto;
+  margin: 5px;
+  min-width: 20rem;
+}
+
+.produto-button img {
+  width: 80px;
+}
+
+.produto-button div {
+  flex-grow: 1;
+}
+
+.produto-button .nome {
+  font-weight: bold;
+}
+
+.produto-button .valor {
+  font-size: 0.9em;
+}
+
+.example-viewport {
+  width: 22rem;
+  height: 15rem;
+}
+
+.example-item {
+  height: 50px;
+}
+
+.total{
+  text-align: right;
+}
+
+.itens{
+  min-width: 18rem;
 }

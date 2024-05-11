@@ -21,7 +21,7 @@ export class PedidosCreateUpdateComponent {
   pedidoForm!: FormGroup;
   formatPhone!: string;
   confirm!: FormControl;
-  itens!: ProdutoModel[];
+  produtos!: ProdutoModel[];
   clientes!: ClienteModel[];
   cliente!: ClienteModel;
   pedidoAtivo!: boolean;
@@ -32,8 +32,6 @@ export class PedidosCreateUpdateComponent {
   { id: 4, nome: 'Cancelado', descricao: 'O pedido foi cancelado.' }
   ];
   mode: 'delete' | 'create' | 'update' = 'create';
-  listTitle = ['mr', 'ms', 'mrs', 'miss', 'dr'];
-  listProfile = ['ADMIN', 'USER'];
 
   private subscription: Subscription = new Subscription();
 
@@ -44,13 +42,21 @@ export class PedidosCreateUpdateComponent {
 
   ngOnInit() {
     if (this.util.modoOperacional === 'demo') {
-      this.itens = this.data.produtos;
+      this.produtos = this.data.produtos;
+      this.clientes = this.data.clientes;
+
     }
 
     if (this.defaults) {
       this.mode = 'update';
     } else {
       this.defaults = {} as PedidoModel;
+      if (this.util.modoOperacional === 'demo') {
+        setTimeout(() => {
+          const total = this.data.pedidos.length + 1;
+          this.pedidoForm.get('id')?.setValue(total);
+        }, 1000);
+      }
     }
 
     this.pedidoForm = this.fb.group({
@@ -59,7 +65,7 @@ export class PedidosCreateUpdateComponent {
       criadoPor: this.defaults.criadoPor || '',
       ativo: this.defaults.ativo || true,
       cliente: this.defaults.cliente || '',
-      itens: this.defaults.itens || '',
+      produtos: this.defaults.produtos || '',
       dataPedido: new Date(this.defaults.dataPedido) || new Date(),
       status: this.defaults.status || 1
     });
@@ -179,4 +185,40 @@ export class PedidosCreateUpdateComponent {
       duration: 5000,
     });
   }
+
+  produtosSelecionados: ProdutoAdicionado[] = [];
+  total = 0;
+
+  adicionarItem(item: ProdutoModel) {
+    const index = this.produtosSelecionados.findIndex(produtoAdicionado => produtoAdicionado.produto === item);
+    if (index === -1) {
+      // Se o item não estiver na lista, adiciona
+      this.produtosSelecionados.push({ id: this.produtosSelecionados.length + 1, quantidade: 1, produto: item });
+    } else {
+      // Se o item já estiver na lista, incrementa a quantidade
+      this.produtosSelecionados[index].quantidade++;
+    }
+    // Atualiza o total somando o preço do produto adicionado
+    this.total += item.precoRevenda;
+  }
+
+  removerItem(item: ProdutoAdicionado) {
+    const index = this.produtosSelecionados.indexOf(item);
+    if (index !== -1) {
+      // Se o item estiver na lista, decrementa a quantidade
+      this.produtosSelecionados[index].quantidade--;
+      // Se a quantidade chegar a zero, remove o item da lista
+      if (this.produtosSelecionados[index].quantidade === 0) {
+        this.produtosSelecionados.splice(index, 1);
+      }
+      // Subtrai o preço do produto do total
+      this.total -= item.produto.precoRevenda;
+    }
+  }
+}
+
+interface ProdutoAdicionado {
+  id: number;
+  quantidade: number;
+  produto: ProdutoModel;
 }
