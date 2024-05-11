@@ -49,9 +49,9 @@
         </div>
 
         <mat-form-field appearance="outline" class="block w-full">
-          <mat-label>Profile</mat-label>
+          <mat-label>Perfil de Usuário</mat-label>
           <mat-select formControlName="role">
-            <mat-option *ngFor="let Profile of listProfile" [value]="Profile">{{Profile}}</mat-option>
+            <mat-option *ngFor="let profile of listProfile" [value]="profile.id">{{profile.descricao}}</mat-option>
           </mat-select>
         </mat-form-field>
       </mat-dialog-content>

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -11,11 +11,34 @@ import { PedidoModel, ProdutoAdicionado } from '../model/pedido.model';
 import { PedidoService } from '../model/pedido.service';
 import { DemoDataService } from 'src/app/services/demo-data.service';
 import { UtilService } from 'src/app/services/util.service';
+import { MatTabGroup } from '@angular/material/tabs';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'DDD MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'DDDD MMMM YYYY',
+  },
+};
 
 @Component({
   selector: 'abs-pedidos-create-update',
   templateUrl: './pedidos-create-update.component.html',
-  styleUrls: ['./pedidos-create-update.component.scss']
+  styleUrls: ['./pedidos-create-update.component.scss'],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ]
 })
 export class PedidosCreateUpdateComponent {
   pedidoForm!: FormGroup;
@@ -29,6 +52,7 @@ export class PedidosCreateUpdateComponent {
   totalParcelas = new FormControl(1);
   produtosSelecionados: ProdutoAdicionado[] = [];
   total = 0;
+  @ViewChild(MatTabGroup) tabGroup!: MatTabGroup;
 
 
   statusList = [
@@ -93,7 +117,7 @@ export class PedidosCreateUpdateComponent {
       ativo: this.defaults.ativo || true,
       cliente: this.defaults.cliente || '',
       produtos: this.defaults.produtos || '',
-      dataPedido: new Date(this.defaults.dataPedido) || new Date(),
+      dataPedido: new Date(this.defaults.dataPedido || new Date()),
       status: this.defaults.status || 1
     });
   }
@@ -116,29 +140,43 @@ export class PedidosCreateUpdateComponent {
   createPedido() {
     const pedido = this.pedidoForm.value;
     pedido.produtos = JSON.stringify(this.produtosSelecionados);
-    this.subscription.add(
-      this.pedidoService.create(pedido).subscribe(
-        (result) => {
-          this.snackbar.open(
-            'Pedido ' +
-            result.id +
-            ' successfully created.',
-            'OK',
-            {
-              duration: 5000,
-            }
-          );
-
-          this.dialogRef.close(pedido);
-        },
-        (exception: BadRequestContract) => {
-          console.log(exception.data)
-          this.snackbar.open(exception.message, 'ERROR', {
-            duration: 5000,
-          });
+    if (this.util.modoOperacional === 'demo') {
+      this.data.addProduct(pedido);
+      this.snackbar.open(
+        'Pedido ' +
+        pedido.id +
+        ' successfully created.',
+        'OK',
+        {
+          duration: 5000,
         }
-      )
-    );
+      );
+      this.dialogRef.close(pedido);
+    } else {
+      this.subscription.add(
+        this.pedidoService.create(pedido).subscribe(
+          (result) => {
+            this.snackbar.open(
+              'Pedido ' +
+              result.id +
+              ' successfully created.',
+              'OK',
+              {
+                duration: 5000,
+              }
+            );
+
+            this.dialogRef.close(pedido);
+          },
+          (exception: BadRequestContract) => {
+            console.log(exception.data)
+            this.snackbar.open(exception.message, 'ERROR', {
+              duration: 5000,
+            });
+          }
+        )
+      );
+    }
   }
 
   updatePedido() {
@@ -251,6 +289,12 @@ export class PedidosCreateUpdateComponent {
       // Subtrai o preço do produto do total
       this.total -= item.produto.precoRevenda;
     }
+  }
+
+  tab = 0;
+  selecionarAba(index: number) {
+    this.tabGroup.selectedIndex = index;
+    this.tab = index;
   }
 }
 

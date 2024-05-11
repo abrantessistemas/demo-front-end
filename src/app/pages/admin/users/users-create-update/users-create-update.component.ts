@@ -20,7 +20,12 @@ export class UsersCreateUpdateComponent {
 
   mode: 'delete' | 'create' | 'update' = 'create';
   listTitle = ['mr', 'ms', 'mrs', 'miss', 'dr'];
-  listProfile = ['ADMIN', 'USER'];
+  listProfile = [
+    { id: 1, descricao: 'Administrador do Sistema' },
+    { id: 2, descricao: 'Administrador' },
+    { id: 3, descricao: 'Usuário' },
+    { id: 4, descricao: 'visitante' }
+  ];
 
   private subscription: Subscription = new Subscription();
 

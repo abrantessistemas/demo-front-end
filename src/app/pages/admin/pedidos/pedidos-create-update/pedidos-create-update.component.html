@@ -67,12 +67,12 @@
           <cdk-virtual-scroll-viewport [itemSize]="produtos?.length" class="example-viewport">
             <div>
               <!-- Utilize a diretiva *ngFor para iterar sobre os produtos e criar os botões -->
-              <button type="button" mat-button class="produto-button" *ngFor="let produto of produtos"
+              <button [disabled]="produto.quatidadeEstoque < 1" type="button" mat-button class="produto-button" *ngFor="let produto of produtos"
                 (click)="adicionarItem(produto)">
                 <div class="container-lista">
                   <img src="{{ produto.imageUrl }}" alt="{{ produto.nome }}">
                   <div>
-                    {{produto.quatidadeEstoque}}
+                    qtde: {{produto.quatidadeEstoque}}
                     <span class="nome">{{ produto.nome }}</span>
                     <br>
                     <span class="descricao">{{ produto.descricao }}</span>
@@ -134,11 +134,19 @@
   </div>
 
   <mat-dialog-actions align="end">
-    <button *ngIf="isCreateMode()" [disabled]="!pedidoForm.valid" color="primary" mat-raised-button type="submit"
-      matTooltip="Create new Pedido">
-      <mat-icon>add</mat-icon>
+    <button *ngIf="tab!=1" color="primary" [disabled]="!pedidoForm.valid" mat-raised-button type="button"
+      (click)="selecionarAba(1)">
       Fechar pedido
     </button>
+    <button *ngIf="tab!=0" color="primary" mat-raised-button type="button" (click)="selecionarAba(0)">
+      Voltar
+    </button>
+    <button *ngIf="isCreateMode() && tab==1" [disabled]="!pedidoForm.valid" color="primary" mat-raised-button
+      type="submit" matTooltip="Create new Pedido">
+      <mat-icon>shop</mat-icon>
+      Confirmar pagamento
+    </button>
+
     <button *ngIf="isUpdateMode()" color="primary" mat-raised-button type="submit" matTooltip="Update">
       <mat-icon>edit</mat-icon>
       Atualizar

@@ -106,11 +106,15 @@ export class PedidosComponent {
       .afterClosed()
       .subscribe((pedido: PedidoModel) => {
         if (pedido) {
-          this.findAllPedidos(this.pageIndex, this.limit);
-          this.snackbar.open('Cadastro realizado com sucesso.', 'OK', {
-            duration: 5000,
-            panelClass: 'app-notification-success'
-          });
+          if (this.util.modoOperacional != 'demo') {
+            this.findAllPedidos(this.pageIndex, this.limit);
+            this.snackbar.open('Cadastro realizado com sucesso.', 'OK', {
+              duration: 5000,
+              panelClass: 'app-notification-success'
+            });
+          }else{
+            this.dataSource = this.data.pedidos;
+          }
         }
       },
         (exception: BadRequestContract) => {
