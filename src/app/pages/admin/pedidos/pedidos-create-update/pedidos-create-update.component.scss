@@ -1,7 +1,7 @@
 .dialog-title {
   width: 100%;
   display: inline-block;
-  padding: 10px;
+  padding: 30px;
 }
 
 .dialog-container {
@@ -134,6 +134,10 @@ img {
 
 .total{
   text-align: right;
+  .valor{
+    font-size: 18px;
+    font-style: oblique;
+  }
 }
 
 .itens{

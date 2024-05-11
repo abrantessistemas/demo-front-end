@@ -1,16 +1,10 @@
 <form (ngSubmit)="save()" [formGroup]="pedidoForm">
   <div mat-dialog-title class="dialog-title">
-    <div class="button-status-container">
-      <button mat-icon-button type="button" [style.background-color]="pedidoForm.get('ativo')?.value ? 'green' : 'red'"
-        (click)="togglePedido()">
-        <mat-icon>{{ pedidoForm.get('ativo')?.value ? 'done' : 'clear' }}</mat-icon>
-      </button>
-    </div>
-
     <div class="text-container">
       <h2 *ngIf="pedidoForm.get('id')?.value">
-        {{ pedidoForm.get('id')?.value }}
+        {{ pedidoForm.get('id')?.value.toString().padStart(5, '0') }}
       </h2>
+
       <h2 *ngIf="!pedidoForm.get('id')?.value">Novo Pedido</h2>
     </div>
 
@@ -24,14 +18,14 @@
   <mat-tab-group [disableRipple]="false">
     <mat-tab label="Descrição">
       <mat-dialog-content class="dialog-container">
-        <mat-form-field appearance="outline" class="block w-full" style="margin-right: 5px;">
-          <mat-label>Status</mat-label>
-          <mat-select formControlName="status">
-            <mat-option *ngFor="let status of statusList" [value]="status.id">{{status.nome}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-
         <div class="container-fields">
+          <div class="button-status-container">
+            <button mat-icon-button type="button"
+              [style.background-color]="pedidoForm.get('ativo')?.value ? 'green' : 'red'" (click)="togglePedido()">
+              <mat-icon>{{ pedidoForm.get('ativo')?.value ? 'done' : 'clear' }}</mat-icon>
+            </button>
+          </div>
+
           <mat-form-field appearance="outline" class="block w-full">
             <mat-label>id</mat-label>
             <input formControlName="id" matInput readonly>
@@ -49,6 +43,13 @@
           </mat-form-field>
         </div>
 
+        <mat-form-field appearance="outline" class="block w-full" style="margin-right: 5px;">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option *ngFor="let status of statusList" [value]="status.id">{{status.nome}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
         <mat-form-field>
           <mat-label>Cliente</mat-label>
           <mat-select formControlName="cliente">
@@ -58,7 +59,10 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-label>Produtos</mat-label>
+        <div>
+          <mat-label style="margin-right: 18rem;">Produtos</mat-label>
+          <mat-label>Itens no pedido</mat-label>
+        </div>
         <div class="container-lista">
           <cdk-virtual-scroll-viewport [itemSize]="produtos.length" class="example-viewport">
             <div>
@@ -68,6 +72,7 @@
                 <div class="container-lista">
                   <img src="{{ produto.imageUrl }}" alt="{{ produto.nome }}">
                   <div>
+                    {{produto.quatidadeEstoque}}
                     <span class="nome">{{ produto.nome }}</span>
                     <br>
                     <span class="descricao">{{ produto.descricao }}</span>
@@ -79,17 +84,22 @@
             </div>
           </cdk-virtual-scroll-viewport>
 
-
-          <!-- Segunda lista - lista de itens selecionados -->
-          <div class="itens">
-            <mat-label>Itens no pedido</mat-label>
-            <mat-selection-list #selecionadosList>
-              <mat-list-option *ngFor="let item of produtosSelecionados" [value]="item">
-                {{ item.quantidade }} X {{ item.produto.nome }} <span class="valor">{{ item.produto.precoRevenda |
-                  currency:'BRL':'symbol':'1.2-2' }}</span>
-              </mat-list-option>
-            </mat-selection-list>
-          </div>
+          <cdk-virtual-scroll-viewport [itemSize]="produtos.length" class="example-viewport">
+            <div>
+              <!-- Utilize a diretiva *ngFor para iterar sobre os produtos e criar os botões -->
+              <div class="produto-button" *ngFor="let produto of produtosSelecionados">
+                <div class="container-lista">
+                  <div style="display: flex;justify-content: space-between;align-items: center;">
+                    <span>{{ produto.produto.nome }} X {{ produto.quantidade }}</span>
+                    <span>{{ produto.produto.precoRevenda | currency:'BRL':'symbol':'1.2-2' }}</span>
+                    <button mat-icon-button type="button" (click)="removerItem(produto)">
+                      <mat-icon color="warn">delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </cdk-virtual-scroll-viewport>
         </div>
         <br>
         <br>
