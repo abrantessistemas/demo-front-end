@@ -1,0 +1,57 @@
+<form (ngSubmit)="save()" [formGroup]="contaPagarForm">
+  <div mat-dialog-title class="dialog-title">
+    <div class="avatar-container">
+      <img (click)="updateImage()" src="../../../../assets/avatar.png" class="avatar" mat-mini-fab
+        matTooltip="Change photo">
+    </div>
+
+    <div class="text-container">
+      <h2 *ngIf="contaPagarForm.get('login')?.value">
+        {{ contaPagarForm.get('login')?.value }}
+      </h2>
+      <h2 *ngIf="!contaPagarForm.get('login')?.value">Novo ContaPagar</h2>
+    </div>
+
+    <div class="button-container">
+      <button mat-dialog-close mat-mini-fab color="primary" type="button">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <mat-tab-group [disableRipple]="false">
+    <mat-tab label="Descrição">
+      <mat-dialog-content class="dialog-container">
+        <mat-form-field appearance="outline" class="block w-full">
+          <mat-label>Nome</mat-label>
+          <input cdkFocusInitial formControlName="nome" matInput required>
+          <mat-error *ngIf="!contaPagarForm.get('nome')?.valid">
+            * Preenchimento obrigatório.
+          </mat-error>
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+        <div class="container-fields">
+
+        </div>
+      </mat-dialog-content>
+    </mat-tab>
+  </mat-tab-group>
+
+  <mat-dialog-actions align="end">
+    <button *ngIf="isCreateMode()" [disabled]="!contaPagarForm.valid" color="primary" mat-raised-button type="submit"
+      matTooltip="Create new ContaPagar">
+      <mat-icon>add</mat-icon>
+      Criar
+    </button>
+    <button *ngIf="isUpdateMode()" color="primary" mat-raised-button type="submit" matTooltip="Update">
+      <mat-icon>edit</mat-icon>
+      Atualizar
+    </button>
+    <button type="button" *ngIf="isUpdateMode()" (click)="deleteContaPagar()" color="primary" mat-raised-button
+      matTooltip="Delete">
+      <mat-icon>delete</mat-icon>
+      Deletar
+    </button>
+
+  </mat-dialog-actions>
+</form>

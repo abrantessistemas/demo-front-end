@@ -8,6 +8,8 @@ import { CategoriaModel } from '../pages/admin/categorias/model/categoria.model'
 import { EstoqueModel } from '../pages/admin/estoques/model/estoque.model';
 import { PedidoModel } from '../pages/admin/pedidos/model/pedido.model';
 import { UserModel } from '../pages/admin/users/model/user.model';
+import { ContaReceberModel } from '../pages/admin/contas-receber/model/conta-receber.model';
+import { ContaPagarModel } from '../pages/admin/contas-pagar/model/conta-pagar.model';
 
 
 @Injectable({
@@ -506,5 +508,25 @@ export class DemoDataService {
      */
   public addUser(user: UserModel) {
     this.users.push(user);
+  }
+
+  contasReceber: any = [
+
+  ]
+  /**
+     * addContasReceber
+     */
+  public addContasReceber(contaReceber: ContaReceberModel) {
+    this.contasReceber.push(contaReceber);
+  }
+
+  contasPagar: any = [
+
+  ]
+  /**
+     * addContasPagar
+     */
+  public addContasPagar(contaPagar: ContaPagarModel) {
+    this.contasPagar.push(contaPagar);
   }
 }

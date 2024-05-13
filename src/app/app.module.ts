@@ -27,6 +27,8 @@ import { WidgetsModule } from './components/widgets/widgets.module';
 import { BeneficiariosModule } from './pages/admin/beneficiarios/beneficiarios.module';
 import { CategoriasModule } from './pages/admin/categorias/categorias.module';
 import { ClientesModule } from './pages/admin/clientes/clientes.module';
+import { ContasPagarModule } from './pages/admin/contas-pagar/contas-pagar.module';
+import { ContasReceberModule } from './pages/admin/contas-receber/contas-receber.module';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { DocumentosModule } from './pages/admin/documentos/documentos.module';
 import { EmpresasModule } from './pages/admin/empresas/empresas.module';
@@ -80,7 +82,9 @@ import { RegisterComponent } from './pages/auth/register/register.component';
     EstoquesModule,
     ClientesModule,
     WidgetsModule,
-    PedidosModule
+    PedidosModule,
+    ContasReceberModule,
+    ContasPagarModule
   ],
   bootstrap: [AppComponent]
 })

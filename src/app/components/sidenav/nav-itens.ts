@@ -55,8 +55,20 @@ export const navItens = [
   },
   {
     routerLink: 'pedidos',
-    icon: 'fas fa-shopping-cart',
+    icon: 'fal fa-shopping-cart',
     label: 'Pedidos',
+    sub: {}
+  },
+  {
+    routerLink: 'contas-receber',
+    icon: 'fal fa-receipt',
+    label: 'Recebimentos',
+    sub: {}
+  },
+  {
+    routerLink: 'contas-pagar',
+    icon: 'fal fa-wallet',
+    label: 'Pagamentos',
     sub: {}
   },
   /* {

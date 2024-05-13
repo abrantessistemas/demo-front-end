@@ -13,5 +13,7 @@ export const environment = {
   produtosUrl: "http://localhost:8080/produtos",
   estoquesUrl: "http://localhost:8080/estoques",
   clientesUrl: "http://localhost:8080/clientes",
-  pedidosUrl: "http://localhost:8080/pedidos"
+  pedidosUrl: "http://localhost:8080/pedidos",
+  contasReceberUrl: "http://localhost:8080/contas-receber",
+  contasPagarUrl: "http://localhost:8080/contas-pagar"
 };
