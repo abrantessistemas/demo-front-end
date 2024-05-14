@@ -25,8 +25,6 @@ export class PedidosComponent {
 
   displayedColumns: string[] = [
     'id',
-    'dataCriacao',
-    'criadoPor',
     'ativo',
     'cliente',
     'itens',

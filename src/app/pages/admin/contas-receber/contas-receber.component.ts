@@ -26,10 +26,11 @@ export class ContasReceberComponent {
   displayedColumns: string[] =
     [
       'id',
-      'dataCriacao',
-      'criadoPor',
       'ativo',
-      'nome', 'actions'
+      'descricao',
+      'valor',
+      'dataRecebimento',
+      'actions'
     ];
 
   dataSource!: any | null;

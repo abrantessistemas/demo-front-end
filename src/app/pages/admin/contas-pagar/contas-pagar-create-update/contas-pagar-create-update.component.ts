@@ -37,7 +37,9 @@ export class ContasPagarCreateUpdateComponent {
       dataCriacao: this.defaults.dataCriacao || '',
       criadoPor: this.defaults.criadoPor || '',
       ativo: this.defaults.ativo || '',
-      nome: this.defaults.nome || ''
+      descricao: this.defaults.descricao || '',
+      valor: this.defaults.valor || '',
+      dataVencimento: new Date(this.defaults.dataVencimento) || ''
     });
   }
   save() {
@@ -62,7 +64,7 @@ export class ContasPagarCreateUpdateComponent {
     this.subscription.add(
       this.contaPagarService.create(contaPagar).subscribe(
         (result) => {
-          this.snackbar.open('ContaPagar ' + result.nome + ' criado com sucesso.',
+          this.snackbar.open('ContaPagar ' + result.descricao + ' criado com sucesso.',
             'OK',
             {
               duration: 5000,
@@ -87,7 +89,7 @@ export class ContasPagarCreateUpdateComponent {
     this.subscription.add(
       this.contaPagarService.update(contaPagar.id, contaPagar).subscribe(
         (result) => {
-          this.snackbar.open('ContaPagar ' + result.nome + ' atualizado com sucesso.',
+          this.snackbar.open('ContaPagar ' + result.descricao + ' atualizado com sucesso.',
             'OK',
             {
               duration: 5000,
@@ -111,7 +113,7 @@ export class ContasPagarCreateUpdateComponent {
 
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        message: 'Tem certeza que deseja deletar o registro de ContaPagar ' + contaPagar.nome + '?'
+        message: 'Tem certeza que deseja deletar o registro de ContaPagar ' + contaPagar.descricao + '?'
       }
     });
 

@@ -26,6 +26,7 @@ export class DocumentosComponent {
 
   displayedColumns: string[] = [
     'id',
+    'ativo',
     'descricao',
     'tipoDocumento',
     'dataInclusao',

@@ -6,10 +6,10 @@
     </div>
 
     <div class="text-container">
-      <h2 *ngIf="contaPagarForm.get('login')?.value">
-        {{ contaPagarForm.get('login')?.value }}
+      <h2 *ngIf="contaPagarForm.get('descricao')?.value">
+        {{ contaPagarForm.get('descricao')?.value }}
       </h2>
-      <h2 *ngIf="!contaPagarForm.get('login')?.value">Novo ContaPagar</h2>
+      <h2 *ngIf="!contaPagarForm.get('descricao')?.value">Nova Conta a Pagar</h2>
     </div>
 
     <div class="button-container">
@@ -23,15 +23,30 @@
     <mat-tab label="Descrição">
       <mat-dialog-content class="dialog-container">
         <mat-form-field appearance="outline" class="block w-full">
-          <mat-label>Nome</mat-label>
-          <input cdkFocusInitial formControlName="nome" matInput required>
-          <mat-error *ngIf="!contaPagarForm.get('nome')?.valid">
+          <mat-label>Descrição</mat-label>
+          <input cdkFocusInitial formControlName="descricao" matInput required>
+          <mat-error *ngIf="!contaPagarForm.get('descricao')?.valid">
             * Preenchimento obrigatório.
           </mat-error>
-          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          <mat-icon matSuffix>description</mat-icon>
         </mat-form-field>
-        <div class="container-fields">
 
+        <div class="container-fields">
+          <mat-form-field appearance="outline" class="block w-full">
+            <mat-label>Valor</mat-label>
+            <input cdkFocusInitial formControlName="valor" matInput required>
+            <mat-error *ngIf="!contaPagarForm.get('valor')?.valid">
+              * Preenchimento obrigatório.
+            </mat-error>
+            <mat-icon matSuffix>monetization_on</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
+            <mat-label>Data de Vencimento</mat-label>
+            <input matInput [matDatepicker]="dataVencimento" formControlName="dataVencimento" readonly>
+            <mat-datepicker-toggle matSuffix [for]="dataVencimento"></mat-datepicker-toggle>
+            <mat-datepicker #dataVencimento></mat-datepicker>
+          </mat-form-field>
         </div>
       </mat-dialog-content>
     </mat-tab>

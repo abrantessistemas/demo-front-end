@@ -26,10 +26,11 @@ export class ContasPagarComponent {
   displayedColumns: string[] =
     [
       'id',
-      'dataCriacao',
-      'criadoPor',
       'ativo',
-      'nome', 'actions'
+      'descricao',
+      'valor',
+      'dataVencimento',
+      'actions'
     ];
 
   dataSource!: any | null;

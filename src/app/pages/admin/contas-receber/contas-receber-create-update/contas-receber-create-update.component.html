@@ -6,10 +6,10 @@
     </div>
 
     <div class="text-container">
-      <h2 *ngIf="contaReceberForm.get('login')?.value">
-        {{ contaReceberForm.get('login')?.value }}
+      <h2 *ngIf="contaReceberForm.get('descricao')?.value">
+        {{ contaReceberForm.get('descricao')?.value }}
       </h2>
-      <h2 *ngIf="!contaReceberForm.get('login')?.value">Novo ContaReceber</h2>
+      <h2 *ngIf="!contaReceberForm.get('descricao')?.value">Nova Conta a Receber</h2>
     </div>
 
     <div class="button-container">
@@ -23,15 +23,30 @@
     <mat-tab label="Descrição">
       <mat-dialog-content class="dialog-container">
         <mat-form-field appearance="outline" class="block w-full">
-          <mat-label>Nome</mat-label>
-          <input cdkFocusInitial formControlName="nome" matInput required>
-          <mat-error *ngIf="!contaReceberForm.get('nome')?.valid">
+          <mat-label>Descrição</mat-label>
+          <input cdkFocusInitial formControlName="descricao" matInput required>
+          <mat-error *ngIf="!contaReceberForm.get('descricao')?.valid">
             * Preenchimento obrigatório.
           </mat-error>
-          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          <mat-icon matSuffix>description</mat-icon>
         </mat-form-field>
-        <div class="container-fields">
 
+        <div class="container-fields">
+          <mat-form-field appearance="outline" class="block w-full">
+            <mat-label>Valor</mat-label>
+            <input cdkFocusInitial formControlName="valor" matInput required>
+            <mat-error *ngIf="!contaReceberForm.get('valor')?.valid">
+              * Preenchimento obrigatório.
+            </mat-error>
+            <mat-icon matSuffix>monetization_on</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="block w-full" style="margin-left: 5px;">
+            <mat-label>Data de Recebimento</mat-label>
+            <input matInput [matDatepicker]="dataRecebimento" formControlName="dataRecebimento" readonly>
+            <mat-datepicker-toggle matSuffix [for]="dataRecebimento"></mat-datepicker-toggle>
+            <mat-datepicker #dataRecebimento></mat-datepicker>
+          </mat-form-field>
         </div>
       </mat-dialog-content>
     </mat-tab>

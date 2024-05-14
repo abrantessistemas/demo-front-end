@@ -23,7 +23,9 @@ export class EstoquesComponent {
   totalItems!: number;
   pageSizeOptions: number[] = [5, 10, 20];
 
-  displayedColumns: string[] = ['id',
+  displayedColumns: string[] = [
+    'id',
+    'ativo',
     'nome',
     'descricao',
     'preco',

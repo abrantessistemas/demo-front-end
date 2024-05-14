@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Cadastro de ContasPagar</mat-card-title>
+    <mat-card-title>Contas a Pagar</mat-card-title>
   </mat-card-header>
   <div class="button-container">
     <button mat-fab color="primary" (click)="createContaPagar()" matTooltip="Criar novo ContaPagar">
@@ -15,28 +15,32 @@
         <td mat-cell *matCellDef="let element">{{element.id}}</td>
       </ng-container>
 
-      <!-- dataCriacao Column -->
-      <ng-container matColumnDef="dataCriacao">
-        <th mat-header-cell *matHeaderCellDef>Data Criação</th>
-        <td mat-cell *matCellDef="let element">{{element.dataCriacao}}</td>
+     <!-- ativo Column -->
+     <ng-container matColumnDef="ativo">
+      <th mat-header-cell *matHeaderCellDef>Ativo</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon class="custom-icon" [ngClass]="{'green-lime': element.ativo, 'red': !element.ativo}">
+          {{element.ativo ? 'check_circle' : 'cancel'}}
+        </mat-icon>
+      </td>
+    </ng-container>
+
+      <!-- descricao Column -->
+      <ng-container matColumnDef="descricao">
+        <th mat-header-cell *matHeaderCellDef>Descrição</th>
+        <td mat-cell *matCellDef="let element">{{element.descricao}}</td>
       </ng-container>
 
-      <!-- criadoPor Column -->
-      <ng-container matColumnDef="criadoPor">
-        <th mat-header-cell *matHeaderCellDef>Criado Por</th>
-        <td mat-cell *matCellDef="let element">{{element.criadoPor}}</td>
+      <!-- valor Column -->
+      <ng-container matColumnDef="valor">
+        <th mat-header-cell *matHeaderCellDef>Valor</th>
+        <td mat-cell *matCellDef="let element">{{ element.valor | currency:'BRL':'symbol':'1.2-2' }}</td>
       </ng-container>
 
-      <!-- ativo Column -->
-      <ng-container matColumnDef="ativo">
-        <th mat-header-cell *matHeaderCellDef>Ativo</th>
-        <td mat-cell *matCellDef="let element">{{element.ativo}}</td>
-      </ng-container>
-
-      <!-- nome Column -->
-      <ng-container matColumnDef="nome">
-        <th mat-header-cell *matHeaderCellDef>Nome</th>
-        <td mat-cell *matCellDef="let element">{{element.nome}}</td>
+      <!-- dataVencimento Column -->
+      <ng-container matColumnDef="dataVencimento">
+        <th mat-header-cell *matHeaderCellDef>Data do Vencimento</th>
+        <td mat-cell *matCellDef="let element">{{element.dataVencimento}}</td>
       </ng-container>
 
       <!-- Action Column -->

@@ -37,7 +37,9 @@ export class ContasReceberCreateUpdateComponent {
       dataCriacao: this.defaults.dataCriacao || '',
       criadoPor: this.defaults.criadoPor || '',
       ativo: this.defaults.ativo || '',
-      nome: this.defaults.nome || ''
+      descricao: this.defaults.descricao || '',
+      valor: this.defaults.valor || '',
+      dataRecebimento: new Date(this.defaults.dataRecebimento) || ''
     });
   }
   save() {
@@ -62,7 +64,7 @@ export class ContasReceberCreateUpdateComponent {
     this.subscription.add(
       this.contaReceberService.create(contaReceber).subscribe(
         (result) => {
-          this.snackbar.open('ContaReceber ' + result.nome + ' criado com sucesso.',
+          this.snackbar.open('ContaReceber ' + result.descricao + ' criado com sucesso.',
             'OK',
             {
               duration: 5000,
@@ -87,7 +89,7 @@ export class ContasReceberCreateUpdateComponent {
     this.subscription.add(
       this.contaReceberService.update(contaReceber.id, contaReceber).subscribe(
         (result) => {
-          this.snackbar.open('ContaReceber ' + result.nome + ' atualizado com sucesso.',
+          this.snackbar.open('ContaReceber ' + result.descricao + ' atualizado com sucesso.',
             'OK',
             {
               duration: 5000,
@@ -111,7 +113,7 @@ export class ContasReceberCreateUpdateComponent {
 
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: {
-        message: 'Tem certeza que deseja deletar o registro de ContaReceber ' + contaReceber.nome + '?'
+        message: 'Tem certeza que deseja deletar o registro de ContaReceber ' + contaReceber.descricao + '?'
       }
     });
 

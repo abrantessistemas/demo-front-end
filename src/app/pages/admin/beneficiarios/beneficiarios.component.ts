@@ -25,6 +25,7 @@ export class BeneficiariosComponent {
 
   displayedColumns: string[] = [
     'id',
+    'ativo',
     'nome',
     'telefone',
     'dataNascimento',

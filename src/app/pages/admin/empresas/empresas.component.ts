@@ -25,8 +25,6 @@ export class EmpresasComponent {
 
   displayedColumns: string[] = [
     'id',
-    'dataCriacao',
-    'criadoPor',
     'ativo',
     'nomeFantasia',
     'razaoSocial',
@@ -137,29 +135,29 @@ export class EmpresasComponent {
     } else {
       this.empresaService.findById(empresa.id).subscribe(empresaById => {
 
-      this.dialog
-        .open(EmpresasCreateUpdateComponent, {
-          data: empresaById,
-        })
-        .afterClosed()
-        .subscribe((empresa) => {
-          if (empresa) {
-            this.findAllEmpresas(this.pageIndex, this.limit);
-            this.snackbar.open('Registro atualizado com sucesso.', 'OK', {
-              duration: 5000,
-              panelClass: 'app-notification-success'
+        this.dialog
+          .open(EmpresasCreateUpdateComponent, {
+            data: empresaById,
+          })
+          .afterClosed()
+          .subscribe((empresa) => {
+            if (empresa) {
+              this.findAllEmpresas(this.pageIndex, this.limit);
+              this.snackbar.open('Registro atualizado com sucesso.', 'OK', {
+                duration: 5000,
+                panelClass: 'app-notification-success'
+              });
+            }
+          },
+            (exception: BadRequestContract) => {
+              this.snackbar.open(exception.message, exception.status.toString(), {
+                duration: 5000,
+                panelClass: 'app-notification-error'
+              });
             });
-          }
-        },
-          (exception: BadRequestContract) => {
-            this.snackbar.open(exception.message, exception.status.toString(), {
-              duration: 5000,
-              panelClass: 'app-notification-error'
-            });
-          });
 
-    });
-  }
+      });
+    }
   }
 
   deleteEmpresa(empresa: EmpresaModel) {

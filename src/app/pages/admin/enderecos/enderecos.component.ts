@@ -23,8 +23,6 @@ export class EnderecosComponent {
 
   displayedColumns: string[] = [
     'id',
-    'dataCriacao',
-    'criadoPor',
     'ativo',
     'cep',
     'logradouro',

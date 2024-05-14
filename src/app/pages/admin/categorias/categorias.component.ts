@@ -23,7 +23,14 @@ export class CategoriasComponent {
   totalItems!: number;
   pageSizeOptions: number[] = [5, 10, 20];
 
-  displayedColumns: string[] = ['id', 'nome', 'actions'];
+  displayedColumns: string[] =
+    [
+      'id',
+      'ativo',
+      'nome',
+      'actions'
+    ];
+
   dataSource!: any | null;
   clickedRows = new Set<CategoriaModel>();
 

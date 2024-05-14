@@ -23,7 +23,15 @@ export class UsersComponent {
   totalItems!: number;
   pageSizeOptions: number[] = [5, 10, 20];
 
-  displayedColumns: string[] = ['id', 'username', 'role', 'actions'];
+  displayedColumns: string[] =
+    [
+      'id',
+      'ativo',
+      'username',
+      'role',
+      'actions'
+    ];
+
   dataSource!: any | null;
   clickedRows = new Set<UserModel>();
 

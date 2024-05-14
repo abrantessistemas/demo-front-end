@@ -42,7 +42,7 @@ export class DemoDataService {
       estoque: 1,
       dataCriacao: '10/05/2024',
       criadoPor: 'random',
-      ativo: true,
+      ativo: false,
       nome: 'processado core i5',
       descricao: 'processado core i5',
       precoCompra: 1600,
@@ -347,7 +347,23 @@ export class DemoDataService {
       telefone: '11 91111-1111',
       responsavel: 'Alan',
       email: 'contato@abrantes.com.br',
-    }]
+    },
+    {
+      id: 2,
+      dataCriacao: '13/05/2024',
+      criadoPor: 'random',
+      ativo: false,
+      nomeFantasia: 'Abrantes Sistemas Disabled',
+      razaoSocial: 'Abrantes Sistemas Desenvolvimento de software ltda.',
+      inscricaoEstadual: '11.111.111',
+      inscricaoMunicipal: '',
+      cnpj: '11.111.111/0001-11',
+      cpf: '111.111.111-11',
+      telefone: '11 91111-1111',
+      responsavel: 'Alan',
+      email: 'contato@abrantes.com.br',
+    }
+  ]
 
   clientes: any = [
     {
@@ -384,7 +400,7 @@ export class DemoDataService {
       id: 3,
       dataCriacao: '10/05/2024',
       criadoPor: 'random',
-      ativo: true,
+      ativo: false,
       nomeFantasia: 'Salão das flores',
       razaoSocial: 'salao das flores',
       inscricaoEstadual: '11.111.111',
@@ -423,7 +439,7 @@ export class DemoDataService {
       id: 3,
       dataCriacao: '10/05/2024',
       criadoPor: 'random',
-      ativo: true,
+      ativo: false,
       nome: 'Casa'
     }
     , {
@@ -461,7 +477,7 @@ export class DemoDataService {
       id: 2,
       dataCriacao: '10/05/2024',
       criadoPor: 'random',
-      ativo: true,
+      ativo: false,
       nome: 'Maximo',
       descricao: 'maximo estoque permitido',
       preco: '5000',
@@ -511,7 +527,42 @@ export class DemoDataService {
   }
 
   contasReceber: any = [
-
+    {
+      id: 1,
+      dataCriacao: '2024-05-14T01:33:45.164Z',
+      criadoPor: 'random',
+      ativo: true,
+      descricao: 'Pagamento boleto pedido',
+      valor: '2500',
+      dataRecebimento: '10/06/2024',
+    },
+    {
+      id: 2,
+      dataCriacao: '2024-05-14T01:33:45.164Z',
+      criadoPor: 'random',
+      ativo: true,
+      descricao: 'Pagamento boleto pedido',
+      valor: '350',
+      dataRecebimento: '08/06/2024',
+    },
+    {
+      id: 3,
+      dataCriacao: '2024-05-14T01:33:45.164Z',
+      criadoPor: 'random',
+      ativo: true,
+      descricao: 'Pagamento boleto pedido',
+      valor: '1200',
+      dataRecebimento: '15/06/2024',
+    },
+    {
+      id: 4,
+      dataCriacao: '2024-05-14T01:33:45.164Z',
+      criadoPor: 'random',
+      ativo: false,
+      descricao: 'Pagamento boleto pedido',
+      valor: '750',
+      dataRecebimento: '02/06/2024',
+    }
   ]
   /**
      * addContasReceber
@@ -521,7 +572,42 @@ export class DemoDataService {
   }
 
   contasPagar: any = [
-
+    {
+      id: 1,
+      dataCriacao: '2024-05-14T01:33:45.164Z',
+      criadoPor: 'random',
+      ativo: true,
+      descricao: 'Pagamento boleto produtos',
+      valor: '2500',
+      dataVencimento: '10/06/2024',
+    },
+    {
+      id: 2,
+      dataCriacao: '2024-05-14T01:33:45.164Z',
+      criadoPor: 'random',
+      ativo: true,
+      descricao: 'Pagamento conta de luz',
+      valor: '220',
+      dataVencimento: '08/06/2024',
+    },
+    {
+      id: 3,
+      dataCriacao: '2024-05-14T01:33:45.164Z',
+      criadoPor: 'random',
+      ativo: true,
+      descricao: 'Pagamento de internet',
+      valor: '180',
+      dataVencimento: '15/06/2024',
+    },
+    {
+      id: 4,
+      dataCriacao: '2024-05-14T01:33:45.164Z',
+      criadoPor: 'random',
+      ativo: false,
+      descricao: 'Pagamento conta de água',
+      valor: '350',
+      dataVencimento: '02/06/2024',
+    }
   ]
   /**
      * addContasPagar

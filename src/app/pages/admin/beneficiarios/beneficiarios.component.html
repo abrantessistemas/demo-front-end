@@ -1,7 +1,6 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Cadastro de Beneficiários</mat-card-title>
-    <mat-card-subtitle>CRUD de Beneficiário</mat-card-subtitle>
+    <mat-card-title>Beneficiários</mat-card-title>
   </mat-card-header>
   <div class="button-container">
     <button mat-fab color="primary" (click)="createBeneficiario()" matTooltip="Criar novo beneficiário">
@@ -12,10 +11,20 @@
     <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
       <!-- id Column -->
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef>id</th>
+        <th mat-header-cell *matHeaderCellDef>ID</th>
         <td mat-cell *matCellDef="let element">{{element.id}}</td>
       </ng-container>
 
+      <!-- ativo Column -->
+      <ng-container matColumnDef="ativo">
+        <th mat-header-cell *matHeaderCellDef>Ativo</th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon class="custom-icon" [ngClass]="{'green-lime': element.ativo}">
+            {{element.ativo ? 'check_circle' : 'cancel'}}
+          </mat-icon>
+        </td>
+      </ng-container>
+      
       <!-- nome Column -->
       <ng-container matColumnDef="nome">
         <th mat-header-cell *matHeaderCellDef>Nome completo</th>

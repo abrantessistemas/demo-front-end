@@ -25,6 +25,7 @@ export class ProdutosComponent {
 
   displayedColumns: string[] = [
     'id',
+    'ativo',
     'nome',
     'descricao',
     'precoCompra',
