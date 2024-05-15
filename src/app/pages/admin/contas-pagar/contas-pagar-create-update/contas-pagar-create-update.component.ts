@@ -7,11 +7,33 @@ import { BadRequestContract } from 'src/app/common/bad-request-contract.model';
 import { ConfirmationDialogComponent } from 'src/app/common/dialog/confirmation-dialog/confirmation-dialog.component';
 import { ContaPagarModel } from '../model/conta-pagar.model';
 import { ContaPagarService } from './../model/conta-pagar.service';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'DDD MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'DDDD MMMM YYYY',
+  },
+};
 
 @Component({
   selector: 'abs-contas-pagar-create-update',
   templateUrl: './contas-pagar-create-update.component.html',
-  styleUrls: ['./contas-pagar-create-update.component.scss']
+  styleUrls: ['./contas-pagar-create-update.component.scss'],
+  providers: [
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ]
 })
 export class ContasPagarCreateUpdateComponent {
   contaPagarForm!: FormGroup;

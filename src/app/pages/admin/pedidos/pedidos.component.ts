@@ -26,10 +26,14 @@ export class PedidosComponent {
   displayedColumns: string[] = [
     'id',
     'ativo',
+    'status',
+    'dataPedido',
     'cliente',
     'itens',
-    'dataPedido',
-    'status',
+    'total',
+    'formaPagamento',
+    'qtdeParcelas',
+    'valorParcela',
     'actions'];
 
   dataSource!: any | null;
@@ -110,7 +114,7 @@ export class PedidosComponent {
               duration: 5000,
               panelClass: 'app-notification-success'
             });
-          }else{
+          } else {
             this.dataSource = this.data.pedidos;
           }
         }

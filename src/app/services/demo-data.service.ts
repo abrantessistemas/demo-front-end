@@ -418,7 +418,46 @@ export class DemoDataService {
     this.clientes.push(cliente);
   }
   endereco: any = [
-    {}]
+    {
+      id: 1,
+      dataCriacao: '10/05/2024',
+      criadoPor: 'random',
+      ativo: true,
+      logradouro: 'Rua alves',
+      complemento: '',
+      numero: '45',
+      bairro: 'Jr venesuela',
+      municipio: 'Jundiai',
+      uf: 'SP',
+      cep: '01421-555',
+    },
+    {
+      id: 2,
+      dataCriacao: '10/05/2024',
+      criadoPor: 'random',
+      ativo: true,
+      logradouro: 'Rua alves',
+      complemento: '',
+      numero: '45',
+      bairro: 'Jr venesuela',
+      municipio: 'Jundiai',
+      uf: 'SP',
+      cep: '01421-555',
+    },
+    {
+      id: 3,
+      dataCriacao: '10/05/2024',
+      criadoPor: 'random',
+      ativo: false,
+      logradouro: 'Rua alves',
+      complemento: '',
+      numero: '45',
+      bairro: 'Jr venesuela',
+      municipio: 'Jundiai',
+      uf: 'SP',
+      cep: '01421-555',
+    }
+  ]
 
   categorias: any = [
     {
@@ -502,18 +541,27 @@ export class DemoDataService {
   users: any = [
     {
       id: 1,
+      dataCriacao: '2024-05-14T01:33:45.164Z',
+      criadoPor: 'random',
+      ativo: true,
       username: 'usuario',
       password: 'usuario',
       role: 1
     },
     {
       id: 2,
+      dataCriacao: '2024-05-14T01:33:45.164Z',
+      criadoPor: 'random',
+      ativo: true,
       username: 'usuario2',
       password: 'usuario',
       role: 2
     },
     {
       id: 3,
+      dataCriacao: '2024-05-14T01:33:45.164Z',
+      criadoPor: 'random',
+      ativo: false,
       username: 'usuario3',
       password: 'usuario',
       role: 3

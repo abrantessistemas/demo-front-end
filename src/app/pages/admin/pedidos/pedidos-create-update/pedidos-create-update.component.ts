@@ -118,8 +118,20 @@ export class PedidosCreateUpdateComponent {
       cliente: this.defaults.cliente || '',
       produtos: this.defaults.produtos || '',
       dataPedido: new Date(this.defaults.dataPedido || new Date()),
-      status: this.defaults.status || 1
+      status: this.defaults.status || 1,
+      total: this.defaults.total || '',
+      formaPagamento: this.defaults.formaPagamento || '',
+      qtdeParcelas: this.defaults.qtdeParcelas || '',
+      valorParcela: this.defaults.valorParcela || '',
     });
+
+    if (this.defaults.id) {
+      this.produtosSelecionados = this.defaults.produtos;
+      this.total = this.defaults.total;
+      this.formaPegamento.setValue(this.defaults.formaPagamento);
+      this.totalParcelas.setValue(this.defaults.qtdeParcelas);
+
+    }
   }
   save() {
     if (this.mode === 'create') {
@@ -139,9 +151,17 @@ export class PedidosCreateUpdateComponent {
 
   createPedido() {
     const pedido = this.pedidoForm.value;
-    pedido.produtos = JSON.stringify(this.produtosSelecionados);
+    pedido.produtos = this.produtosSelecionados;
+    pedido.total = this.total;
+    pedido.formaPagamento = this.formaPegamento.value;
+
+    if (this.formaPegamento.value === 2) {
+      pedido.qtdeParcelas = this.totalParcelas.value;
+      pedido.valorParcela = this.valorJuros;
+    }
+
     if (this.util.modoOperacional === 'demo') {
-      this.data.addProduct(pedido);
+      this.data.addPedido(pedido);
       this.snackbar.open(
         'Pedido ' +
         pedido.id +
@@ -256,9 +276,19 @@ export class PedidosCreateUpdateComponent {
     let somar = false;
 
     if (index === -1) {
+      let totalPorItem = 0;
       // Se o item não estiver na lista, adiciona
       if (item.quatidadeEstoque > 0) {
-        this.produtosSelecionados.push({ id: this.produtosSelecionados.length + 1, quantidade: 1, produto: item });
+        totalPorItem += item.precoRevenda;
+
+        this.produtosSelecionados.push(
+          {
+            id: this.produtosSelecionados.length + 1,
+            quantidade: 1,
+            produto: item,
+            totalPorItem: 0
+          }
+        );
         somar = true;
       }
 

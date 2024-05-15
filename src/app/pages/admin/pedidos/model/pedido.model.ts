@@ -10,10 +10,15 @@ export class PedidoModel {
   produtos!: ProdutoAdicionado[];
   dataPedido!: Date;
   status!: string;
+  total!: number;
+  formaPagamento!: number;
+  qtdeParcelas!: number;
+  valorParcela!: number;
 }
 
 export class ProdutoAdicionado {
   id!: number;
   quantidade!: number;
   produto!: ProdutoModel;
+  totalPorItem!: number;
 }

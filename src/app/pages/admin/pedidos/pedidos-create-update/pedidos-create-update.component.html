@@ -71,7 +71,7 @@
                 *ngFor="let produto of produtos" (click)="adicionarItem(produto)">
                 <div class="container-lista">
                   <img src="{{ produto.imageUrl }}" alt="{{ produto.nome }}">
-                  <div>
+                  <div style="margin-left: 50px;">
                     qtde: {{produto.quatidadeEstoque}}
                     <span class="nome">{{ produto.nome }}</span>
                     <br>
@@ -144,7 +144,7 @@
     </button>
     <button *ngIf="isCreateMode() && tab==1" [disabled]="!pedidoForm.valid" color="primary" mat-raised-button
       type="submit" matTooltip="Create new Pedido">
-      <mat-icon>shop</mat-icon>
+      <mat-icon>receipt-long</mat-icon>
       Confirmar pagamento
     </button>
 
